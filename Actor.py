@@ -2,6 +2,7 @@ class Person:
 
     list_of_person = {}
     ident = 1000000
+    a =1
 
     def __init__(self,id,name,age, nationality, biographie, tv_series_actor, tv_series_productor, tv_series_director):
         if Person.ident > 9999999:
