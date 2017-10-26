@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#header {
+    background-color:darkslateblue;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:150px;
+    float:left;
+    padding:5px;
+}
+#section {
+    width:350px;
+    float:left;
+    padding:10px;
+}
+#footer {
+    background-color:darkslateblue;
+    color:white;
+    clear:both;
+    text-align:center;
+   padding:5px;
+}
+</style>
+</head>
+<body>
+
+<div id="header">
+<h1>TVShow Database</h1>
+</div>
+
+<div id="nav">
+    <a href="../listTVShow/">List All TVShows</a><br>
+    <a href="../searchTVShow/">Search TVShows</a><br>
+    <a href="">Add New TVShow</a><br>
+<br>
+</div>
+
+<div id="section">
+    <h2>Add New TVShow to the Database</h2>
+<form method="post">
+    {% csrf_token %}
+    <ul>
+       {{ form.as_p}}
+    </ul>
+    <input type="submit" name="submit" value="Add TV Serie">
+</form>
+</div>
+
+<div id="footer">
+</div>
+
+</body>
