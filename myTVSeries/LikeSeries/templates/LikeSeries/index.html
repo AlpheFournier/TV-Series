@@ -1,9 +1,109 @@
+
 {% if latest_question_list %}
     <ul>
     {% for question in latest_question_list %}
-        <li><a href="/LikeSeries/{{ question.id }}/">{{ question.question_text }}</a></li>
+        <li><a href="{% url 'LikeSeries:detail' question.id %}">{{ question.question_text }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No Likes are available.</p>
+    <p>No TV Series are available.</p>
 {% endif %}
+
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'LikeSeries/style.css' %}" />
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#header {
+    background-color:darkslateblue;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+
+#intermediate{
+    background-color:darkslateblue;
+    color:white;
+    text-align:center;
+    padding:2px;
+}
+
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:150px;
+    float:left;
+    padding:5px;
+}
+#section {
+    width:550px;
+    float:left;
+    padding:10px;
+}
+#footer {
+    background-color:darkslateblue;
+    color:white;
+    clear:both;
+    text-align:center;
+   padding:5px;
+}
+</style>
+</head>
+<body>
+
+<div id="header">
+<h1>TV Show Database</h1>
+</div>
+
+<div id="intermediate">
+<h1>Bienvenue sur MyTVSeries, likes les séries que tu aimes!</h1>
+</div>
+
+<div id="nav">
+    <a href="../listTVShow/">Ma Bibliothèque </a><br>
+    <a href="">Rechercher une série</a><br>
+    <a href="../add_TVShow_form/">Ajouter une série </a><br>
+<br>
+</div>
+
+<div id="section">
+    <h2>Recherchez une série dans la bibliothèque</h2>
+<form method="get">
+    <ul>
+       <dt>Titre: {{ form.title}}<br></dt>
+        <input type="text" name="titre" size="20">
+       <dt>Réalisateur: {{form.director}}<br></dt>
+        <input type="text" name="realisateur" size="20">
+       <dt>Genre: {{ form.genre}}<br></dt>
+        <select>
+            <option>Horreur</option>
+            <option>Drame</option>
+            <option>Comedie</option>
+            <option>Science Fiction</option>
+            <option selected>Choisir un genre</option>
+            <option>Epoque</option>
+            <option>Action</option>
+        </select>
+        <dt>Langage: {{ form.language}}<br></dt>
+         <input type="text" name="langage" size="20">
+        <dt>Note: {{ form.mark}}<br></dt>
+         <input type="text" name="note" size="20">
+    </ul>
+    <input type="submit" name="submit" value="Rechercher une série">
+</form>
+</div>
+
+<div id="footer">
+
+</div>
+
+</body>
+
+
+
+
+
