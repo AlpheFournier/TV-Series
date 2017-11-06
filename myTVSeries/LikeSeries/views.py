@@ -3,8 +3,11 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from .models import TVShow
-from .forms import TVShowForm
+from .forms import TVShowForm, SearchForm
 from django.template import loader
+from myTVSeries import api_call
+import json
+from django.contrib.auth import *
 
 def home(request):
     return HttpResponse("Bienvenue sur MyTVSeries. Likes les séries que tu aimes!")
@@ -68,8 +71,20 @@ def search(request):
     form = TVShowForm()
     return render(request,'index.html', {'form': form})
 
+def search_serie(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            template = loader.get_template('results.html')
+            serie_id = api_call.Api_call.get_tv_id(request.POST['search'])
+            response = []
+            for i in range(0, len(serie_id)):
+                response.append(api_call.Api_call.get_serie())
+            context = {'response':response}
+            return HttpResponse(template.render(request=request, context=context))
+        else:
+            raise EnvironmentError
+    else:
+        form = SearchForm()
 
-
-
-
-
+    return render(request, 'index.html', {'form':form})

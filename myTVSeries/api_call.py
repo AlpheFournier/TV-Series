@@ -23,6 +23,11 @@ class Api_call:
             answer.append(element['id'])
         return answer
 
+    def get_serie(self,query):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "?" + Api_call.api_key)
+        result = TVShow(resp.json())
+        return result
+
     def want_person(self, query):
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query" + query)
         answer = []
