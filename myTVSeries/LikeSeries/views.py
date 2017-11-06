@@ -9,7 +9,6 @@ from django.template import loader
 def home(request):
     return HttpResponse("Bienvenue sur MyTVSeries. Likes les séries que tu aimes!")
 
-
 def IndexView(request):
     template = loader.get_template('LikeSeries/index.html')
     return HttpResponse(template.render(request=request))
