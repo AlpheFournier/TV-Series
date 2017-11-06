@@ -1,4 +1,5 @@
 import requests
+from myTVSeries.LikeSeries.models import TVShow
 
 class Api_call:
     url = "https://api.themoviedb.org/3/"
@@ -11,8 +12,21 @@ class Api_call:
         resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query" + query)
         answer = []
         for element in resp.json()['answer']:
-            answer.append(element['name'])
+            x = TVShow(element)
+            answer.append(x)
         return answer
+
+    def get_tv_id(self,query):
+        resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query" + query)
+        answer = []
+        for element in resp.json()['answer']:
+            answer.append(element['id'])
+        return answer
+
+    def get_serie(self,query):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "?" + Api_call.api_key)
+        result = TVShow(resp.json())
+        return result
 
     def want_person(self, query):
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query" + query)
@@ -21,20 +35,12 @@ class Api_call:
             answer.append(element['name'])
         return answer
 
-    def want_picture(self):
-        # We use id=1399, it corresponds to Game of thrones, and we can't use a random because there is some series which doesn't have any associated picture...
-        resp = requests.get(Api_call.url + "tv/1399/images" + Api_call.api_key)
+    def want_picture(self, query):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/images" + Api_call.api_key)
         ans = resp.json()
         image = ans.get('backdrops')[0].get('file_path')
         url_image = "https://image.tmdb.org/t/p/w640" + image
         return(url_image)
-
-    def element_serie(self, id):
-        resp = requests.get(Api_call.url + "tv/" + str(id) + Api_call.api_key)
-        answer = []
-        for element in resp.json()['answer']:
-            answer.append(element)
-        return answer
 
     def discover_serie(self):
         resp = requests.get (Api_call.url + "discover/tv/" + Api_call.api_key + "&sor_by=vote_average.desc&page=1&include_null_first_air_dates=false'")
@@ -43,5 +49,4 @@ class Api_call:
         for element in ans.json()['answer']:
             answer.append(element['name'])
         print("The {} highest rated series are: ".format(len(answer)))
-        print(answer)
-        return(answer)
+        return answer
