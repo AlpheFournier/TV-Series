@@ -1,4 +1,5 @@
 import requests
+from myTVSeries.LikeSeries.models import TVShow
 
 class Api_call:
     url = "https://api.themoviedb.org/3/"
@@ -11,7 +12,15 @@ class Api_call:
         resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query" + query)
         answer = []
         for element in resp.json()['answer']:
-            answer.append(element['name'])
+            x = TVShow(element)
+            answer.append(x)
+        return answer
+
+    def get_tv_id(self,query):
+        resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query" + query)
+        answer = []
+        for element in resp.json()['answer']:
+            answer.append(element['id'])
         return answer
 
     def want_person(self, query):
@@ -43,5 +52,4 @@ class Api_call:
         for element in ans.json()['answer']:
             answer.append(element['name'])
         print("The {} highest rated series are: ".format(len(answer)))
-        print(answer)
-        return(answer)
+        return answer

@@ -3,7 +3,11 @@ from django.contrib import admin
 
 # Create your models here.
 
-class TVShow(models.Model):
+class TVShow():
+
+    def __init__(self, dic):
+        for i,j in dic.items():
+            setattr(self,i,j)
 
     GENRE_OPTIONS = (
         ('Horror', 'Horror'),
@@ -14,12 +18,12 @@ class TVShow(models.Model):
         ('Period', 'Period')
     )
     tv_id = models.IntegerField()
-    title = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
     language = models.CharField(max_length=20)
-    director = models.CharField(max_length=30)
+    overview = models.CharField(max_length=30)
     genre = models.CharField(max_length=10,
                              choices=GENRE_OPTIONS)
-    mark= models.IntegerField()
+    vote_avg= models.IntegerField()
 
     #Nos accesseurs
 
@@ -28,54 +32,57 @@ class TVShow(models.Model):
         return self.tv_id
 
     @property
-    def title(self):
-        return self.title
+    def name(self):
+        return self.name
 
     @property
     def language(self):
         return self.language
 
     @property
-    def director(self):
-        return self.director
+    def overview(self):
+        return self.overview
 
     @property
     def genre(self):
         return self.genre
 
     @property
-    def mark(self):
-        return self.mark
+    def vote_avg(self):
+        return self.vote_avg
 
     @tv_id.setter
     def tv_id(self, value):
         self._tv_id = value
 
-    @title.setter
-    def title(self, value):
-        self._title = value
+    @name.setter
+    def name(self, value):
+        self._name = value
 
     @language.setter
     def language(self, value):
         self._language = value
 
-    @director.setter
-    def director(self, value):
-        self._director = value
+    @overview.setter
+    def overview(self, value):
+        self._overview = value
 
     @genre.setter
     def genre(self, value):
         self._genre = value
 
-    @mark.setter
-    def mark(self, value):
-        self._mark = value
+    @vote_avg.setter
+    def vote_avg(self, value):
+        self._vote_avg = value
 
 
-class Person(models.Model):
+class Person():
 
-    last_name = models.CharField(max_length=200)
-    first_name = models.CharField(max_length=200)
+    def __init__(self,dic):
+        for i,j in dic.items():
+            setattr(self,i,j)
+
+    name = models.CharField(max_length=200)
     gender = models.CharField(max_length=200)
     birthday = models.DateField()
     deathday = models.DateField()
@@ -83,12 +90,8 @@ class Person(models.Model):
     mark = models.IntegerField()
 
     @property
-    def last_name(self):
-        return self.last_name
-
-    @property
-    def first_name(self):
-        return self.first_name
+    def name(self):
+        return self.name
 
     @property
     def gender(self):
@@ -110,13 +113,9 @@ class Person(models.Model):
     def mark(self):
         return self.mark
 
-    @last_name.setter
-    def last_name(self, value):
-        self._last_name = value
-
-    @first_name.setter
-    def first_name(self, value):
-        self._first_name = value
+    @name.setter
+    def name(self, value):
+        self._name = value
 
     @gender.setter
     def gender(self, value):
