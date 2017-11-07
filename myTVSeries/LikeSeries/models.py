@@ -3,7 +3,7 @@ from django.contrib import admin
 
 # Create your models here.
 
-class TVShow():
+class TVShow(models.Model):
 
     def __init__(self, dic):
         for i,j in dic.items():

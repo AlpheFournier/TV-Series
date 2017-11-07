@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 
-    'LikeSeries.apps.LikeseriesConfig',
+    'LikeSeries.apps.LikeSeriesConfig',
     'signUp.apps.SignupConfig',
     'django.contrib.admin',
     'django.contrib.auth',

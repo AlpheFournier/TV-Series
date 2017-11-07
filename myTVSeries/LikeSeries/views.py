@@ -5,7 +5,6 @@ from django.http import HttpResponse
 from .models import TVShow
 from .forms import TVShowForm, SearchForm
 from django.template import loader
-from myTVSeries import api_call
 import json
 from django.contrib.auth import *
 
@@ -82,7 +81,7 @@ def search(request):
                                                        'TVShow_listing': TVShow_listing})
     form = TVShowForm()
     return render(request,'LikeSeries/index.html', {'form': form})
-
+'''
 def search_serie(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -101,4 +100,4 @@ def search_serie(request):
         form = SearchForm()
 
     return render(request, 'LikeSeries/index.html', {'form':form})
-
+'''
