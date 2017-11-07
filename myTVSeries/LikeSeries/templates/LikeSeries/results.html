@@ -1,3 +1,53 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+body {font-family: "Lato", sans-serif}
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Lato";
+    letter-spacing: 5px;
+}
+.mySlides{
+display: none;
+}
+.w3-left, .w3-right, .w3-badge
+{
+cursor: pointer;
+}
+.w3-badge
+{
+height: 13px;
+width: 13px;
+padding: 0;
+background-color: transparent;
+}
+.w3-tag, .fa {cursor:pointer}
+.w3-tag {height:15px;width:15px;padding:0;margin-top:6px}
+</style>
+
+
+<body>
+
+<!-- Navbar (sit on top) -->
+<div class="w3-top">
+  <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
+      <a href="#home" class="w3-bar-item w3-button">My TVSeries</a>
+    <!-- Right-sided navbar links. Hide them on small screens -->
+    <div class="w3-right w3-hide-small">
+      <a href="#Ma_bibliothèque" class="w3-bar-item w3-button">Ma Bibliothèque</a>
+      <a href="#Rechercher_une_série" class="w3-bar-item w3-button">Rechercher une série</a>
+      <a href="#Ajouter_une_série" class="w3-bar-item w3-button">Ajouter une série</a>
+    </div>
+  </div>
+</div>
+
+
+#Afficher les résultats de la requête:
+
 <h1>{{ question.question_text }}</h1>
 
 <ul>
@@ -8,53 +58,15 @@
 
 <a href="{% url 'LikeSeries:detail' question.id %}">Like another TV Serie?</a>
 
-<!DOCTYPE html>
-<html>
+
 <head>
     <script type="text/javascript" src="jquery-latest.js"></script>
     <script type="text/javascript" src="jquery.tablesorter.js"></script>
-    <style>
-#header {
-    background-color:lightseagreen;
-    color:white;
-    text-align:center;
-    padding:5px;
-}
-#nav {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:300px;
-    width:150px;
-    float:left;
-    padding:5px;
-}
-#section {
-    width:500px;
-    float:left;
-    padding:10px;
-}
-#footer {
-    background-color:lightseagreen;
-    color:white;
-    clear:both;
-    text-align:center;
-   padding:5px;
-}
-</style>
 </head>
 <body>
 
-<div id="header">
-<h1> TV Series Database</h1>
-</div>
 
-<div id="nav">
-    <a href="../listTVShows/">List All TVShows</a><br>
-    <a href="../searchTVShow">Search TVShows/a><br>
-    <a href="../add_TVShow_form/">Add New TV Show</a><br>
-<br>
 </div>
-
 
 <div id="section">
     <h1>The Search Result for: {{ search_string }} </h1>
@@ -62,7 +74,7 @@
     <thead>
     <tr>
         <th>Titre de la série</th>
-        <th>Realisateur</th>
+        <th>Réalisateur</th>
         <th>Genre</th>
         <th>Langage</th>
         <th>Note</th>

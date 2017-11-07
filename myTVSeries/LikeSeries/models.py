@@ -138,12 +138,6 @@ class Person():
         self._mark = value
 
 
-class ItemAdmin(admin.ModelAdmin):
-    list_display = ["title"]
-    search_fields = ["title"]
-
-admin.site.register(TVShow, ItemAdmin)
-
 
 
 

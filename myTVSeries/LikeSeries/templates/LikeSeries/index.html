@@ -40,12 +40,12 @@
     </div>
   </div>
 
-  <!-- Contact -->
+  <!-- Barre de Recherche -->
   <div class="w3-center w3-padding-64" id="contact">
     <span class="w3-xlarge w3-bottombar w3-border-dark-grey w3-padding-16">Bienvenue sur My TVSeries, likes les séries que tu aimes!</span>
   </div>
 
-  <form class="w3-container" action="/action_page.php" target="_blank">
+  <form class="w3-container" action=url for search method ="POST" target="_blank">
     <div class="w3-section">
       <label>Titre</label>
       <input class="w3-input w3-border w3-hover-border-black" style="width:100%;" type="text" name="Titre" required>
@@ -56,7 +56,15 @@
     </div>
     <div class="w3-section">
       <label>Genre</label>
-      <input class="w3-input w3-border w3-hover-border-black" style="width:100%;" type="text" name="Genre" required>
+      <select class="w3-select w3-border w3-hover-border-black" style="width:100%;" name="Genre" required>
+        <option value="" disabled selected>Choisir un genre</option>
+        <option value="1">Horreur</option>
+        <option value="2">Drame</option>
+        <option value="3">Comedie</option>
+        <option value="4">Science Fiction</option>
+        <option value="5">Epoque</option>
+        <option value="5">Action</option>
+      </select>
     </div>
     <div class="w3-section">
       <label>Langage</label>
@@ -67,18 +75,5 @@
 
 </div>
 
-
-<head>
-<style>
-
-#section {
-    width:650px;
-    float:left;
-    padding:10px;
-}
-
-</style>
-</head>
-<body>
-
 {% endblock %}
+

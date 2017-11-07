@@ -16,14 +16,26 @@ def IndexView(request):
     template = loader.get_template('LikeSeries/index.html')
     return HttpResponse(template.render(request=request))
 
+def ResultsView(request):
+    template = loader.get_template('LikeSeries/results.html')
+    return HttpResponse(template.render(request=request))
+
+def TVShow_pageView(request):
+    template = loader.get_template('LikeSeries/TVShow_page.html')
+    return HttpResponse(template.render(request=request))
+
+
+#Fonction qui permet de liker une série et de rajouter une série à sa liste de séries likées:
 def add_TVShow_form(request):
-    if request.POST:
+    series_liked=[]
+    # si j'ai cliqué sur le bouton je le rajoute à la liste de séries likées
+    if request.POST ():
         form = TVShowForm(request.POST)
         if form.is_valid():
             # On vérifie que la série existe déjà dans la base de données
             check_db = TVShow.objects.filter(title=request.POST['title'])
             if len(check_db) > 0:
-                return render(request, 'TVShow_exists.html',
+                return render(request, 'LikeSeries/TVShow_page.html',
                               {'TVShow_title': request.POST['title']})
             else:
                 # Save form and redirect to the success page
@@ -32,11 +44,11 @@ def add_TVShow_form(request):
                                           {'TVShow_title': request.POST['title']})
     else:
         form = TVShowForm()
-    return render(request, 'add_TVShow_form.html',
+    return render(request, 'LikeSeries/TVShow_page.html',
                   {'form': form})
 
+# Pour chercher dans la base de données avec le titre de la série, le genre, le réalisateur, les notes etc...
 def search(request):
-    # Pour chercher dans la base de données avec le titre de la série, le genre, le réalisateur, les notes etc...
     if request.GET:
         TVShow_listing = []
         search_string = ""
@@ -66,16 +78,17 @@ def search(request):
                 TVShow_listing.append(TVShow_dict)
             search_string = " ".join((search_string, request.GET['mark']))
         if len(TVShow_listing) > 0:
-            return render_to_response('results.html', {'search_string': search_string,
+            return render_to_response('LikeSeries/results.html', {'search_string': search_string,
                                                        'TVShow_listing': TVShow_listing})
     form = TVShowForm()
-    return render(request,'index.html', {'form': form})
+    return render(request,'LikeSeries/index.html', {'form': form})
 
 def search_serie(request):
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
-            template = loader.get_template('results.html')
+            template = loader.get_template('LikeSeries/results.html')
+
             serie_id = api_call.Api_call.get_tv_id(request.POST['search'])
             response = []
             for i in range(0, len(serie_id)):
@@ -87,4 +100,5 @@ def search_serie(request):
     else:
         form = SearchForm()
 
-    return render(request, 'index.html', {'form':form})
+    return render(request, 'LikeSeries/index.html', {'form':form})
+
