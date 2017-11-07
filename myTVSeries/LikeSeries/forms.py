@@ -14,3 +14,4 @@ class TVShowForm(forms.ModelForm):
 
 class SearchForm(forms.ModelForm):
     pass
+

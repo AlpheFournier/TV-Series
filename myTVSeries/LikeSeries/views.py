@@ -3,12 +3,14 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from .models import TVShow
-from .forms import TVShowForm
+from .forms import TVShowForm, SearchForm
 from django.template import loader
+from myTVSeries import api_call
+import json
+from django.contrib.auth import *
 
 def home(request):
     return HttpResponse("Bienvenue sur MyTVSeries. Likes les séries que tu aimes!")
-
 
 def IndexView(request):
     template = loader.get_template('LikeSeries/index.html')
@@ -86,6 +88,7 @@ def search_serie(request):
         form = SearchForm(request.POST)
         if form.is_valid():
             template = loader.get_template('LikeSeries/results.html')
+
             serie_id = api_call.Api_call.get_tv_id(request.POST['search'])
             response = []
             for i in range(0, len(serie_id)):
@@ -98,7 +101,4 @@ def search_serie(request):
         form = SearchForm()
 
     return render(request, 'LikeSeries/index.html', {'form':form})
-
-
-
 
