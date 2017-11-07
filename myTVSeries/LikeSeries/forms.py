@@ -12,3 +12,5 @@ class TVShowForm(forms.ModelForm):
         model = TVShow
         fields = ["title", "director", "genre", "language","mark"]
 
+class SearchForm(forms.ModelForm):
+    pass

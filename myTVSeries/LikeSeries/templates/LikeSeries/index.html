@@ -3,6 +3,7 @@
 <title>W3.CSS Template</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 body {font-family: "Lato", sans-serif}
@@ -27,6 +28,7 @@ background-color: transparent;
 .w3-tag, .fa {cursor:pointer}
 .w3-tag {height:15px;width:15px;padding:0;margin-top:6px}
 </style>
+<head>
 
 <script>
 var slideIndex = 1;
@@ -106,12 +108,12 @@ function showDivs(n) {
     </div>
   </div>
 
-  <!-- Contact -->
+  <!-- Barre de Recherche -->
   <div class="w3-center w3-padding-64" id="contact">
     <span class="w3-xlarge w3-bottombar w3-border-dark-grey w3-padding-16">Bienvenue sur My TVSeries, likes les séries que tu aimes!</span>
   </div>
 
-  <form class="w3-container" action="/action_page.php" target="_blank">
+  <form class="w3-container" action=url for search method ="POST" target="_blank">
     <div class="w3-section">
       <label>Titre</label>
       <input class="w3-input w3-border w3-hover-border-black" style="width:100%;" type="text" name="Titre" required>
@@ -122,7 +124,15 @@ function showDivs(n) {
     </div>
     <div class="w3-section">
       <label>Genre</label>
-      <input class="w3-input w3-border w3-hover-border-black" style="width:100%;" type="text" name="Genre" required>
+      <select class="w3-select w3-border w3-hover-border-black" style="width:100%;" name="Genre" required>
+        <option value="" disabled selected>Choisir un genre</option>
+        <option value="1">Horreur</option>
+        <option value="2">Drame</option>
+        <option value="3">Comedie</option>
+        <option value="4">Science Fiction</option>
+        <option value="5">Epoque</option>
+        <option value="5">Action</option>
+      </select>
     </div>
     <div class="w3-section">
       <label>Langage</label>
@@ -134,45 +144,4 @@ function showDivs(n) {
 </div>
 
 
-<head>
-<style>
-
-#section {
-    width:650px;
-    float:left;
-    padding:10px;
-}
-
-</style>
-</head>
-<body>
-
-
-
-<div id="section">
-    <h2></h2>
-<form method="get">
-    <ul>
-       <dt>Titre: {{ form.title}}<br></dt>
-        <input type="text" name="titre" size="20">
-       <dt>Réalisateur: {{form.director}}<br></dt>
-        <input type="text" name="realisateur" size="20">
-       <dt>Genre: {{ form.genre}}<br></dt>
-        <select>
-            <option>Horreur</option>
-            <option>Drame</option>
-            <option>Comedie</option>
-            <option>Science Fiction</option>
-            <option selected>Choisir un genre</option>
-            <option>Epoque</option>
-            <option>Action</option>
-        </select>
-        <dt>Langage: {{ form.language}}<br></dt>
-         <input type="text" name="langage" size="20">
-        <dt>Note: {{ form.mark}}<br></dt>
-         <input type="text" name="note" size="20">
-    </ul>
-    <input type="submit" name="submit" value="Rechercher une série">
-</form>
-</div>
 

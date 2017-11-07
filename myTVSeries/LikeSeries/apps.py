@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class LikeseriesConfig(AppConfig):
+class LikeSeriesConfig(AppConfig):
     name = 'LikeSeries'
