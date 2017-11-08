@@ -48,14 +48,14 @@ def add_TVShow_form(request):
 
 # Pour chercher dans la base de données avec le titre de la série, le genre, le réalisateur, les notes etc...
 
-def search_serie(request):
+def search(request):
     if request.method == 'POST':
         form = TVShowForm(request.POST)
         if form.is_valid():
             from myTVSeries import api_call
             api = api_call.Api_call()
             template = loader.get_template('LikeSeries/results.html')
-            serie_id = api.get_tv_id(request.POST['search_serie'])
+            serie_id = api.get_tv_id(request.POST['search'])
             response = []
             for i in range(0, len(serie_id)):
                 serie = api.get_serie(serie_id[i])

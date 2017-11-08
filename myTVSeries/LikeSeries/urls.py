@@ -6,6 +6,5 @@ urlpatterns = [
     # ex: /LikeSeries/
     url(r'^$', views.IndexView, name='index'),
     url(r'^TVShow_page/$', views.TVShow_pageView, name="TVShow_page"),
-    url(r'^results/$', views.ResultsView, name="results"),
-    url(r'^search/$', views.search_serie, name="search")
+    url(r'^results/$', views.search, name="results"),
 ]

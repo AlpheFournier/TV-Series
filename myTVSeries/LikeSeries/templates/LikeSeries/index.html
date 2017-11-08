@@ -45,11 +45,19 @@
     <span class="w3-xlarge w3-bottombar w3-border-dark-grey w3-padding-16">Bienvenue sur My TVSeries, likes les séries que tu aimes!</span>
   </div>
 
-  <form class="w3-container" action="results.html" method ="POST" target="_blank">
-    <div class="w3-section">
+  <form class="w3-container" action="/LikeSeries/results/" method ="post" target="_blank">
+      {% csrf_token %}
+      {{form}}
+      <div class="w3-section">
       <label>Titre</label>
-      <input class="w3-input w3-border w3-hover-border-black" style="width:100%;" type="text" name="Titre" required>
+      <input class="w3-input w3-border w3-hover-border-black" style="width:100%;" type="text" name="search" checked = "checked">
     </div>
+    <button type="submit" class="w3-button w3-block w3-black">Rechercher une série </button>
+  </form>
+
+</div>
+
+{% endblock %}
     <!--
     <div class="w3-section">
       <label>Réalisateur</label>
@@ -71,10 +79,5 @@
       <label>Langage</label>
       <input class="w3-input w3-border w3-hover-border-black" style="width:100%;" type="text" name="Langage" required>
     </div> -->
-    <button type="submit" class="w3-button w3-block w3-black">Rechercher une série </button>
-  </form>
 
-</div>
-
-{% endblock %}
 
