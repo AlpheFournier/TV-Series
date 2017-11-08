@@ -10,7 +10,7 @@ class TVShowForm(forms.ModelForm):
     class Meta:
         """ Assigning the order of the fields"""
         model = TVShow
-        fields = []
+        fields = ['tv_id', 'name', 'language', 'overview', 'vote_avg', 'director', 'genre']
 
 class SearchForm(forms.ModelForm):
     pass

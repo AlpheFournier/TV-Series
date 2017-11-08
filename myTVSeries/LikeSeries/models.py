@@ -5,7 +5,7 @@ from django.contrib import admin
 
 class TVShow(models.Model):
 
-    def __init__(self, dic):
+    def __init__(self,dic):
         for i,j in dic.items():
             setattr(self,i,j)
 
@@ -17,6 +17,7 @@ class TVShow(models.Model):
         ('Action', 'Action'),
         ('Period', 'Period')
     )
+
     tv_id = models.IntegerField()
     name = models.CharField(max_length=200)
     language = models.CharField(max_length=20)
@@ -24,8 +25,9 @@ class TVShow(models.Model):
     genre = models.CharField(max_length=10,
                              choices=GENRE_OPTIONS)
     vote_avg= models.IntegerField()
+    director = models.CharField(max_length=200)
 
-    #Nos accesseurs
+"""  #Nos accesseurs
 
     @property
     def tv_id(self):
@@ -51,6 +53,10 @@ class TVShow(models.Model):
     def vote_avg(self):
         return self.vote_avg
 
+    @property
+    def director (self):
+        return self.director
+
     @tv_id.setter
     def tv_id(self, value):
         self._tv_id = value
@@ -75,6 +81,11 @@ class TVShow(models.Model):
     def vote_avg(self, value):
         self._vote_avg = value
 
+    @director.setter
+    def director(self, value):
+        self.director = value
+
+"""
 
 class Person():
 

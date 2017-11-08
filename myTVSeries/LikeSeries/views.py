@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from .models import TVShow
 from .forms import TVShowForm, SearchForm
 from django.template import loader
+from ..api_call import *
 import json
 from django.contrib.auth import *
 
@@ -81,17 +82,16 @@ def search(request):
                                                        'TVShow_listing': TVShow_listing})
     form = TVShowForm()
     return render(request,'LikeSeries/index.html', {'form': form})
-'''
+
 def search_serie(request):
     if request.method == 'POST':
-        form = SearchForm(request.POST)
+        form = TVShowForm(request.POST)
         if form.is_valid():
             template = loader.get_template('LikeSeries/results.html')
-
-            serie_id = api_call.Api_call.get_tv_id(request.POST['search'])
+            serie_id = Api_call.get_tv_id(request.POST['search'])
             response = []
             for i in range(0, len(serie_id)):
-                response.append(api_call.Api_call.get_serie())
+                response.append(Api_call.get_serie())
             context = {'response':response}
             return HttpResponse(template.render(request=request, context=context))
         else:
@@ -100,4 +100,4 @@ def search_serie(request):
         form = SearchForm()
 
     return render(request, 'LikeSeries/index.html', {'form':form})
-'''
+
