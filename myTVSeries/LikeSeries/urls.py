@@ -7,5 +7,5 @@ urlpatterns = [
     url(r'^$', views.IndexView, name='index'),
     url(r'^TVShow_page/$', views.TVShow_pageView, name="TVShow_page"),
     url(r'^results/$', views.ResultsView, name="results"),
-    url(r'^search/$', views.search, name="search")
+    url(r'^search/$', views.search_serie, name="search")
 ]

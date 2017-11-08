@@ -5,10 +5,6 @@ from django.contrib import admin
 
 class TVShow(models.Model):
 
-    def __init__(self,dic):
-        for i,j in dic.items():
-            setattr(self,i,j)
-
     GENRE_OPTIONS = (
         ('Horror', 'Horror'),
         ('Drama', 'Drama'),

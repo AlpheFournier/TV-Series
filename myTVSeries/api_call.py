@@ -5,7 +5,7 @@ class Api_call:
     url = "https://api.themoviedb.org/3/"
     api_key = "?api_key=52d6a72d6078ec54905fb65e4c55c301"
 
-    def __int__(self):
+    def __init__(self):
         pass
 
     def want_serie(self, query):
