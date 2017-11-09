@@ -1,13 +1,11 @@
 from django.db import models
+from django import forms
+
 from django.contrib import admin
 
 # Create your models here.
 
-class TVShow():
-
-    def __init__(self, dic):
-        for i,j in dic.items():
-            setattr(self,i,j)
+class TVShow(models.Model):
 
     GENRE_OPTIONS = (
         ('Horror', 'Horror'),
@@ -18,15 +16,23 @@ class TVShow():
         ('Period', 'Period')
     )
     tv_id = models.IntegerField()
-    name = models.CharField(max_length=200)
-    language = models.CharField(max_length=20)
+    title = models.CharField(max_length=200)
+    director = models.CharField(max_length=200, blank=True)
+    language = models.CharField(max_length=20, blank=True)
+    actors = models.CharField(max_length=200, blank=True)
     overview = models.CharField(max_length=30)
-    genre = models.CharField(max_length=10,
-                             choices=GENRE_OPTIONS)
+    gender = models.CharField(max_length=10,
+                             choices=GENRE_OPTIONS, blank=True)
     vote_avg= models.IntegerField()
 
-    #Nos accesseurs
 
+    """def __init__(self, dic):
+        models.Model.__init__(self, dic)
+
+        for i,j in dic.items():
+            setattr(self,i,j)"""
+
+    #Nos accesseurs
     @property
     def tv_id(self):
         return self.tv_id
@@ -76,7 +82,7 @@ class TVShow():
         self._vote_avg = value
 
 
-class Person():
+class Person(models.Model):
 
     def __init__(self,dic):
         for i,j in dic.items():
@@ -139,6 +145,8 @@ class Person():
 
 
 
+class Like(models.Model):
+    like_counter = models.IntegerField()
 
 
 

@@ -39,10 +39,13 @@ h1,h2,h3,h4,h5,h6 {
     <div class="w3-twothird w3-container">
       <h1 class="w3-text-black w3-xlarge">Résumé</h1>
       <p>...</p>
-        <h2 class="w3-medium">Acteurs: </h2>
+        <h2 class="w3-medium">Acteurs:</h2>
+            {% for item in person %}
+            <p>{{ item.name }}</p>
+            {% endfor %}
       <h3 class="w3-medium">Réalisateur: </h3>
       <h4 class="w3-medium">Note des spectateurs: </h4>
-      <button class="w3-button w3-circle w3-blue">+</button>
+      <form method="POST"> <button type="submit" class="w3-button w3-circle w3-blue">+</button> <form>
     </div>
 
     <div class="w3-third w3-container">

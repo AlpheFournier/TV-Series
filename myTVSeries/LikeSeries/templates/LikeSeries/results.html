@@ -8,7 +8,7 @@
 <style>
 body {font-family: "Lato", sans-serif}
 h1,h2,h3,h4,h5,h6 {
-    font-family: "Lato";
+    font-family: "Lato", sans-serif;
     letter-spacing: 5px;
 }
 .mySlides{
@@ -48,55 +48,22 @@ background-color: transparent;
 
 #Afficher les résultats de la requête:
 
-<h1>{{ question.question_text }}</h1>
-
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.likes }} like{{ choice.likes|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'LikeSeries:detail' question.id %}">Like another TV Serie?</a>
-
-
-<head>
-    <script type="text/javascript" src="jquery-latest.js"></script>
-    <script type="text/javascript" src="jquery.tablesorter.js"></script>
-</head>
-<body>
-
-
-</div>
-
-<div id="section">
-    <h1>The Search Result for: {{ search_string }} </h1>
-    <table id="myTable" style="width:150%" class="tablesorter">
-    <thead>
-    <tr>
-        <th>Titre de la série</th>
-        <th>Réalisateur</th>
-        <th>Genre</th>
-        <th>Langage</th>
-        <th>Note</th>
-     </tr>
-    </thead>
-    <tbody>
-     {% for movie_dict in movie_listing %}
-        <tr>
-            <td align="center" width="40">{{ TVShow_dict.TVShow_object.title}}</td>
-            <td align="center" width="15">{{ TVShow_dict.TVShow_object.director}}</td>
-            <td align="center" width="10">{{ TVShow_dict.TVShow_object.genre}}</td>
-        <td align="center" width="12">{{ TVShow_dict.TVShow_object.language}}</td>
-        </tr>
-
-     {% endfor %}
-    <tbody>
-    </table>
-
-</div>
-
-<div id="footer">
-
-</div>
-
+{% block results %}
+    <div class = "results row col-xs-12 col-md-12">
+        Page de résultat de la recherche, voici les résultats :
+        <ul id="resultsBlock" class="resultsBlock">
+        {% for item in response %}
+            <div id="resultsContent" class="resultsContent">
+                <a href="TVShowPage?tv_id={{ item.tv_id }}">
+                        <img id="resultsImg" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" style="float:left;width:161px;height:240px;"
+                         alt="Image de la série" />
+                    <ul>
+                    <li>{{item.overview}}</li>
+                    </ul>
+                </a>
+            </div>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock results %}
 </body>
