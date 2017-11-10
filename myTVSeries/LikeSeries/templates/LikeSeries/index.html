@@ -44,18 +44,19 @@
   <div class="w3-center w3-padding-64" id="contact">
     <span class="w3-xlarge w3-bottombar w3-border-dark-grey w3-padding-16">Bienvenue sur My TVSeries, likes les séries que tu aimes!</span>
   </div>
-
   <form class="w3-container" action="/LikeSeries/results/" method ="post" target="_blank">
-      {% csrf_token %}
-      {{form}}
+    {% csrf_token %}
+    {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br>
+        {{ field }}      </p>
+    {% endfor %}
       <div class="w3-section">
       <label>Titre</label>
       <input class="w3-input w3-border w3-hover-border-black" style="width:100%;" type="text" name="search" checked = "checked">
     </div>
-    <button type="submit" class="w3-button w3-block w3-black">Rechercher une série </button>
+  <button type="submit" class="w3-button w3-block w3-black">Rechercher une série </button>
   </form>
-
-</div>
 
 {% endblock %}
     <!--

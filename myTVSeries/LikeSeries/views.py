@@ -3,10 +3,13 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from .models import TVShow
-from .forms import TVShowForm
+from .forms import TVShowForm, LikeForm, SearchForm
 from django.template import loader
 import json
 from django.contrib.auth import *
+
+import sys
+sys.path.append("..")
 
 def home(request):
     return HttpResponse("Bienvenue sur MyTVSeries. Likes les séries que tu aimes!")
@@ -23,7 +26,7 @@ def TVShow_pageView(request):
     template = loader.get_template('LikeSeries/TVShow_page.html')
     return HttpResponse(template.render(request=request))
 
-
+"""
 #Fonction qui permet de liker une série et de rajouter une série à sa liste de séries likées:
 def add_TVShow_form(request):
     series_liked=[]
@@ -44,7 +47,7 @@ def add_TVShow_form(request):
     else:
         form = TVShowForm()
     return render(request, 'LikeSeries/TVShow_page.html',
-                  {'form': form})
+                  {'form': form})"""
 
 # Pour chercher dans la base de données avec le titre de la série, le genre, le réalisateur, les notes etc...
 
@@ -55,10 +58,10 @@ def search(request):
             from myTVSeries import api_call
             api = api_call.Api_call()
             template = loader.get_template('LikeSeries/results.html')
-            serie_id = api.get_tv_id(request.POST['search'])
+            serie_id = api.get_tv_id(request.POST['title'])
             response = []
             for i in range(0, len(serie_id)):
-                serie = api.get_serie(serie_id[i])
+                serie = api.get_serie_name(serie_id[i])
                 response.append(serie)
             context = {'response': response}
             return HttpResponse(template.render(request=request, context=context))
@@ -67,4 +70,22 @@ def search(request):
     else:
         form = TVShowForm()
     return render(request, 'LikeSeries/results.html', {'form': form})
+
+# fonction qui récupère l'id/l'objet de la série sur laquelle on a cliqué dans la page results
+def TVShowPage(request):
+    tv_id = request.GET.get('tv_id')
+    from myTVSeries import api_call
+    api = api_call.Api_call()
+    serie = api.get_serie(tv_id)
+    person = api.want_person('tv_id')
+    context = {'serie': serie}
+    template = loader.get_template('LikeSeries/TVShow_page.html')
+    return HttpResponse(template.render(request=request, context=context))
+
+# fonction qui permet de liker les séries et de former une base de données à partir de cette action
+def Save_like(request):
+    if request.method == 'POST':
+        like = LikeForm(request.POST)
+    else:
+        raise EnvironmentError
 

@@ -8,14 +8,6 @@ class Api_call:
     def __init__(self):
         pass
 
-    def want_serie(self, query):
-        resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query" + query)
-        answer = []
-        for element in resp.json()['answer']:
-            x = TVShow(element)
-            answer.append(x)
-        return answer
-
     def get_tv_id(self,query):
         resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query" + query)
         answer = []
@@ -24,9 +16,39 @@ class Api_call:
         return answer
 
     def get_serie(self,query):
-        resp = requests.get(Api_call.url + "tv/" + str(query) + "?" + Api_call.api_key)
+        resp = requests.get(Api_call.url + "tv/" + str(query) + Api_call.api_key)
         result = TVShow(resp.json())
         return result
+
+    def get_serie_name(self, query):
+        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
+        answer = []
+        for element in resp.json()['answer']:
+            answer.append(element['name'])
+        return answer
+
+    def get_serie_director(self, query):
+        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
+        answer = []
+        director = resp.json().get('created_by')
+        for element in director['answer']:
+            answer.append(element['name'])
+        return answer
+
+    def get_serie_overview(self, query):
+        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
+        answer = []
+        for element in resp.json()['answer']:
+            answer.append(element['overview'])
+        return answer
+
+    def get_serie_actors(self, query):
+        resp = requests.get(Api_call.url + "/tv" + str(query) + "/credits" + Api_call.api_key)
+        answer = []
+        actor = resp.json().get('cast')
+        for element in actor['answer']:
+            answer.append(element['name'])
+        return answer
 
     def want_person(self, query):
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query" + query)

@@ -15,13 +15,14 @@ class TVShow(models.Model):
     )
 
     tv_id = models.IntegerField()
-    name = models.CharField(max_length=200)
-    language = models.CharField(max_length=20)
+    title = models.CharField(max_length=200)
+    director = models.CharField(max_length=200, blank=True)
+    language = models.CharField(max_length=20, blank=True)
+    actors = models.CharField(max_length=200, blank=True)
     overview = models.CharField(max_length=30)
-    genre = models.CharField(max_length=10,
-                             choices=GENRE_OPTIONS)
-    vote_avg= models.IntegerField()
-    director = models.CharField(max_length=200)
+    gender = models.CharField(max_length=10,
+                              choices=GENRE_OPTIONS, blank=True)
+    vote_avg = models.IntegerField()
 
 """  #Nos accesseurs
 
@@ -144,10 +145,8 @@ class Person():
     def mark(self, value):
         self._mark = value
 
-
-
-
-
+class Like (models.Model):
+    like_counter = models.IntegerField()
 
 
 
