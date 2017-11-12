@@ -5,7 +5,12 @@ from django.http import HttpResponse
 from .models import TVShow
 from .forms import TVShowForm, LikeForm
 from django.template import loader
-from myTVSeries import api_call
+import json
+
+import sys
+sys.path.append("..")
+
+import api_call
 
 def home(request):
     return HttpResponse("Bienvenue sur MyTVSeries. Likes les séries que tu aimes!")
@@ -56,7 +61,7 @@ def search(request):
             serie_id = api.get_tv_id(request.POST['title'])
             response = []
             for i in range(0, len(serie_id)):
-                serie = api.get_serie_name(serie_id[i])
+                serie = api.get_serie(serie_id[i])
                 response.append(serie)
             context = {'response': response}
             return HttpResponse(template.render(request=request, context=context))

@@ -1,10 +1,10 @@
 from django.conf.urls import url
-from myTVSeries.LikeSeries import views
+from .views import search, TVShow_pageView, Save_like
 
 app_name = 'LikeSeries'
 urlpatterns = [
     # ex: /LikeSeries/
-    url(r'^$', views.search, name = 'index'),
-    url(r'^TVShow_page/$', views.TVShow_pageView, name='TVShow_page'),
-    url(r'^TVShow_page/$', views.Save_like, name ='TVShowPage')
+    url(r'^$', search, name = 'index'),
+    url(r'^TVShow_page/$', TVShow_pageView, name='TVShow_page'),
+    url(r'^TVShow_page/$', Save_like, name ='TVShowPage')
 ]
