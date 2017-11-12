@@ -3,7 +3,7 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from .models import TVShow
-from .forms import TVShowForm, LikeForm, SearchForm
+from .forms import TVShowForm, LikeForm
 from django.template import loader
 import json
 from django.contrib.auth import *
@@ -77,7 +77,7 @@ def TVShowPage(request):
     api = api_call.Api_call()
     serie = api.get_serie(tv_id)
     person = api.want_person('tv_id')
-    context = {'serie': serie}
+    context = {'serie': serie, 'person': person}
     template = loader.get_template('LikeSeries/TVShow_page.html')
     return HttpResponse(template.render(request=request, context=context))
 

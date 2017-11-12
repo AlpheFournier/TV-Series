@@ -11,12 +11,9 @@ class TVShowForm(forms.ModelForm):
     class Meta:
         """ Assigning the order of the fields"""
         model = TVShow
-        fields = ["title" ]
-
-class SearchForm(forms.ModelForm):
-    pass
+        fields = ["title", "director", "actors", "gender", ]
 
 class LikeForm(forms.ModelForm):
     class Meta:
         model = Like
-        fields = ['like_counter']
+        fields = ["like_counter",]
