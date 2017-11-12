@@ -1,5 +1,5 @@
 import requests
-from myTVSeries.LikeSeries.models import TVShow
+from myTVSeries.LikeSeries.models import TVShow, Person
 
 class Api_call:
     url = "https://api.themoviedb.org/3/"
@@ -54,7 +54,8 @@ class Api_call:
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query" + query)
         answer = []
         for element in resp.json()['answer']:
-            answer.append(element['name'])
+            x = Person(element)
+            answer.append(x)
         return answer
 
     def want_picture(self, query):

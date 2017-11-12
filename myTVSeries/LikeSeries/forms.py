@@ -2,6 +2,7 @@
 
 from django import forms
 from .models import TVShow, Like
+from .apps import LikeSeriesConfig
 
 
 #création du formulaire:
@@ -10,7 +11,7 @@ class TVShowForm(forms.ModelForm):
     class Meta:
         """ Assigning the order of the fields"""
         model = TVShow
-        fields = ['tv_id', 'title', 'language', 'overview', 'vote_avg', 'director', 'gender', 'actors']
+        fields = ["title" ]
 
 class SearchForm(forms.ModelForm):
     pass

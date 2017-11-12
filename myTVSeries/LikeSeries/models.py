@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib import admin
+from django import forms
 
 # Create your models here.
 
@@ -24,65 +25,65 @@ class TVShow(models.Model):
                               choices=GENRE_OPTIONS, blank=True)
     vote_avg = models.IntegerField()
 
-"""  #Nos accesseurs
-
-    @property
-    def tv_id(self):
-        return self.tv_id
-
-    @property
-    def name(self):
-        return self.name
-
-    @property
-    def language(self):
-        return self.language
-
-    @property
-    def overview(self):
-        return self.overview
-
-    @property
-    def genre(self):
-        return self.genre
-
-    @property
-    def vote_avg(self):
-        return self.vote_avg
-
-    @property
-    def director (self):
-        return self.director
-
-    @tv_id.setter
-    def tv_id(self, value):
-        self._tv_id = value
-
-    @name.setter
-    def name(self, value):
-        self._name = value
-
-    @language.setter
-    def language(self, value):
-        self._language = value
-
-    @overview.setter
-    def overview(self, value):
-        self._overview = value
-
-    @genre.setter
-    def genre(self, value):
-        self._genre = value
-
-    @vote_avg.setter
-    def vote_avg(self, value):
-        self._vote_avg = value
-
-    @director.setter
-    def director(self, value):
-        self.director = value
 
 """
+#Nos accesseurs
+
+@property
+  def tv_id(self):
+      return self.tv_id
+
+  @property
+  def name(self):
+      return self.name
+
+  @property
+  def language(self):
+      return self.language
+
+  @property
+  def overview(self):
+      return self.overview
+
+  @property
+  def gender(self):
+      return self.gender
+
+  @property
+  def vote_avg(self):
+      return self.vote_avg
+
+  @property
+  def director(self):
+      return self.director
+
+  @tv_id.setter
+  def tv_id(self, value):
+      self._tv_id = value
+
+  @name.setter
+  def name(self, value):
+      self._name = value
+
+  @language.setter
+  def language(self, value):
+      self._language = value
+
+  @overview.setter
+  def overview(self, value):
+      self._overview = value
+
+  @gender.setter
+  def gender(self, value):
+      self._gender = value
+
+  @vote_avg.setter
+  def vote_avg(self, value):
+      self._vote_avg = value
+
+  @director.setter
+  def director(self, value):
+      self.director = value """
 
 class Person():
 

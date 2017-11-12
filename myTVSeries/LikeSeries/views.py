@@ -7,7 +7,6 @@ from .forms import TVShowForm, LikeForm, SearchForm
 from django.template import loader
 import json
 from django.contrib.auth import *
-
 import sys
 sys.path.append("..")
 
