@@ -2,8 +2,6 @@
 
 from django import forms
 from .models import TVShow, Like
-from .apps import LikeSeriesConfig
-
 
 #création du formulaire:
 

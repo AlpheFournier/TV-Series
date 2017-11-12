@@ -5,17 +5,14 @@ from django.http import HttpResponse
 from .models import TVShow
 from .forms import TVShowForm, LikeForm
 from django.template import loader
-import json
-from django.contrib.auth import *
-import sys
-sys.path.append("..")
+from myTVSeries import api_call
 
 def home(request):
     return HttpResponse("Bienvenue sur MyTVSeries. Likes les séries que tu aimes!")
 
-def IndexView(request):
+"""def IndexView(request):
     template = loader.get_template('LikeSeries/index.html')
-    return HttpResponse(template.render(request=request))
+    return HttpResponse(template.render(request=request))"""
 
 def ResultsView(request):
     template = loader.get_template('LikeSeries/results.html')
@@ -54,7 +51,6 @@ def search(request):
     if request.method == 'POST':
         form = TVShowForm(request.POST)
         if form.is_valid():
-            from myTVSeries import api_call
             api = api_call.Api_call()
             template = loader.get_template('LikeSeries/results.html')
             serie_id = api.get_tv_id(request.POST['title'])
@@ -68,12 +64,11 @@ def search(request):
             raise EnvironmentError
     else:
         form = TVShowForm()
-    return render(request, 'LikeSeries/results.html', {'form': form})
+    return render(request, 'LikeSeries/index.html', {'form': form})
 
 # fonction qui récupère l'id/l'objet de la série sur laquelle on a cliqué dans la page results
 def TVShowPage(request):
     tv_id = request.GET.get('tv_id')
-    from myTVSeries import api_call
     api = api_call.Api_call()
     serie = api.get_serie(tv_id)
     person = api.want_person('tv_id')
