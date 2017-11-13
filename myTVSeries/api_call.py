@@ -1,7 +1,8 @@
 import requests
 import sys
-sys.path.append(".")
+sys.path.append('.')
 import LikeSeries.models_serie
+import LikeSeries.models_person
 
 class Api_call:
     url = "https://api.themoviedb.org/3/"
@@ -56,7 +57,7 @@ class Api_call:
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query=" + query)
         answer = []
         for element in resp.json()['results']:
-            x = LikeSeries.models.Person(element)
+            x = LikeSeries.models_person.Person(element)
             answer.append(x)
         return answer
 

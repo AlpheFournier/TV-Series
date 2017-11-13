@@ -2,7 +2,6 @@
 
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
-from .models import TVShow
 from .forms import TVShowForm, LikeForm
 from django.template import loader
 import json

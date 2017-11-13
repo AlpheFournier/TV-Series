@@ -2,8 +2,8 @@ from django.db import models
 
 class TVShow():
 
-    def __init__(self,dico):
-        for i,j in dico.items():
+    def __init__(self, dict):
+        for i,j in dict.items():
             setattr(self,i,j)
 
     @property
