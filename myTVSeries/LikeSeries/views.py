@@ -59,10 +59,12 @@ def search(request):
             api = api_call.Api_call()
             template = loader.get_template('LikeSeries/results.html')
             serie_id = api.get_tv_id(request.POST['title'])
+            print(serie_id)
             response = []
             for i in range(0, len(serie_id)):
                 serie = api.get_serie(serie_id[i])
                 response.append(serie)
+                print(response)
             context = {'response': response}
             return HttpResponse(template.render(request=request, context=context))
         else:

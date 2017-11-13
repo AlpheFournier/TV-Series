@@ -11,16 +11,18 @@
         <ul id="resultsBlock" class="resultsBlock">
         {% for item in response %}
             <div id="resultsContent" class="resultsContent">
-                <a href ="TVShowPage?tv_id={{item.tv_id}}">
+                <h2>{{item.name}}</h2>
                 <img id="resultsImg" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" style="float:left;width:161px;height:240px;"
                      alt="Image de la série" />
-                </a>
                 <ul>
                     <li>{{item.overview}}</li>
+                    <li>{{item.status}}</li>
                 </ul>
             </div>
+            <br>
         {% endfor %}
         </ul>
     </div>
+
 {% endblock results %}
 </body>
