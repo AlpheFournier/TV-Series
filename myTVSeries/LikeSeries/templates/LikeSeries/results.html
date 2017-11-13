@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html>
-<title>W3.CSS Template</title>
+<title>MyTVSeries</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<head>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
 body {font-family: "Lato", sans-serif}
@@ -29,8 +27,37 @@ background-color: transparent;
 .w3-tag {height:15px;width:15px;padding:0;margin-top:6px}
 </style>
 
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
 
-<body>
+function plusDivs(n) {
+   showDivs(slideIndex += n);
+}
+
+function currentDiv(n) {
+   showDivs(slideIndex = n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  var dots = document.getElementsByClassName("demo");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length} ;
+  for (i = 0; i < x.length; i++) {
+     x[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+     dots[i].classList.remove("w3-white");
+  }
+  x[slideIndex-1].style.display = "block";
+  dots[slideIndex-1].classList.add("w3-white");
+}
+</script>
+<html>
+
+
 
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
@@ -38,65 +65,62 @@ background-color: transparent;
       <a href="#home" class="w3-bar-item w3-button">My TVSeries</a>
     <!-- Right-sided navbar links. Hide them on small screens -->
     <div class="w3-right w3-hide-small">
-      <a href="#Ma_bibliothèque" class="w3-bar-item w3-button">Ma Bibliothèque</a>
-      <a href="#Rechercher_une_série" class="w3-bar-item w3-button">Rechercher une série</a>
-      <a href="#Ajouter_une_série" class="w3-bar-item w3-button">Ajouter une série</a>
+        <a href="{% url 'LikeSeries:index' %}" class="w3-bar-item w3-button">Rechercher une série</a>
+      {% if user.is_authenticated %}
+        <a href="#Log in" class="w3-bar-item w3-button">Ma Bibliothèque</a>
+        <a href="{% url 'logout' %}" class="w3-bar-item w3-button">Se déconnecter</a>
+      {% else %}
+        <a href="{% url 'login' %}" class="w3-bar-item w3-button">Se connecter</a>
+      {% endif %}
     </div>
   </div>
 </div>
 
+<!-- Content -->
+<div class="w3-content" style="max-width:1100px;margin-top:80px;margin-bottom:80px">
 
-#Afficher les résultats de la requête:
 
-<h1>{{ question.question_text }}</h1>
 
-<ul>
-{% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.likes }} like{{ choice.likes|pluralize }}</li>
-{% endfor %}
-</ul>
-
-<a href="{% url 'LikeSeries:detail' question.id %}">Like another TV Serie?</a>
+</div>
 
 
 <head>
-    <script type="text/javascript" src="jquery-latest.js"></script>
-    <script type="text/javascript" src="jquery.tablesorter.js"></script>
+<style>
+
+#section {
+    width:650px;
+    float:left;
+    padding:10px;
+}
+
+</style>
 </head>
 <body>
 
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Simple is Better Than Complex{% endblock %}</title>
+  </head>
 
-</div>
+    <main>
 
-<div id="section">
-    <h1>The Search Result for: {{ search_string }} </h1>
-    <table id="myTable" style="width:150%" class="tablesorter">
-    <thead>
-    <tr>
-        <th>Titre de la série</th>
-        <th>Réalisateur</th>
-        <th>Genre</th>
-        <th>Langage</th>
-        <th>Note</th>
-     </tr>
-    </thead>
-    <tbody>
-     {% for movie_dict in movie_listing %}
-        <tr>
-            <td align="center" width="40">{{ TVShow_dict.TVShow_object.title}}</td>
-            <td align="center" width="15">{{ TVShow_dict.TVShow_object.director}}</td>
-            <td align="center" width="10">{{ TVShow_dict.TVShow_object.genre}}</td>
-        <td align="center" width="12">{{ TVShow_dict.TVShow_object.language}}</td>
-        </tr>
+#Afficher les résultats de la requête:
 
-     {% endfor %}
-    <tbody>
-    </table>
-
-</div>
-
-<div id="footer">
-
-</div>
-
+    <div id = "results_page">
+        Page de résultat de la recherche, voici les résultats :
+        <!--{% for item in response %}
+            <div>
+                <ul>
+                    <li>{{item.name}}</li>
+                    <li>{{item.overview}}</li>
+                </ul>
+                <img id="resultsImg" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" style="float:left;width:161px;height:240px;"
+                     alt="Image de la série" />
+            </div>
+            <br>
+        {% endfor %}-->
+    </div>
+    </main>
+</html>
 </body>

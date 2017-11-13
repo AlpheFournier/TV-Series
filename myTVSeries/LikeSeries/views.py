@@ -2,18 +2,21 @@
 
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
-from .models import TVShow
-from .forms import TVShowForm, SearchForm
+from .forms import TVShowForm, LikeForm
 from django.template import loader
 import json
-from django.contrib.auth import *
+
+import sys
+sys.path.append("..")
+
+import api_call
 
 def home(request):
     return HttpResponse("Bienvenue sur MyTVSeries. Likes les séries que tu aimes!")
 
-def IndexView(request):
+"""def IndexView(request):
     template = loader.get_template('LikeSeries/index.html')
-    return HttpResponse(template.render(request=request))
+    return HttpResponse(template.render(request=request))"""
 
 def ResultsView(request):
     template = loader.get_template('LikeSeries/results.html')
@@ -23,7 +26,7 @@ def TVShow_pageView(request):
     template = loader.get_template('LikeSeries/TVShow_page.html')
     return HttpResponse(template.render(request=request))
 
-
+"""
 #Fonction qui permet de liker une série et de rajouter une série à sa liste de séries likées:
 def add_TVShow_form(request):
     series_liked=[]
@@ -44,60 +47,45 @@ def add_TVShow_form(request):
     else:
         form = TVShowForm()
     return render(request, 'LikeSeries/TVShow_page.html',
-                  {'form': form})
+                  {'form': form})"""
 
 # Pour chercher dans la base de données avec le titre de la série, le genre, le réalisateur, les notes etc...
-def search(request):
-    if request.GET:
-        TVShow_listing = []
-        search_string = ""
-        if request.GET['title']:
-            for TVShow_object in TVShow.objects.filter(title__contains=request.GET['title']):
-                TVShow_dict = {'TVShow_object': TVShow_object}
-                TVShow_listing.append(TVShow_dict)
-            search_string = request.GET['title']
-        if request.GET['genre']:
-            for TVShow_object in TVShow.objects.filter(genre__contains=request.GET['genre']):
-                TVShow_dict = {'TVShow_object': TVShow_object}
-                TVShow_listing.append(TVShow_dict)
-            search_string = " ".join((search_string, request.GET['genre']))
-        if request.GET['director']:
-            for TVShow_object in TVShow.objects.filter(director__contains=request.GET['director']):
-                TVShow_dict = {'TVShow_object': TVShow_object}
-                TVShow_listing.append(TVShow_dict)
-            search_string = " ".join((search_string, request.GET['director']))
-        if request.GET['language']:
-            for TVShow_object in TVShow.objects.filter(language__contains=request.GET['language']):
-                TVShow_dict = {'TVShow_object': TVShow_object}
-                TVShow_listing.append(TVShow_dict)
-            search_string = " ".join((search_string, request.GET['language']))
-        if request.GET['mark']:
-            for TVShow_object in TVShow.objects.filter(mark__contains=request.GET['mark']):
-                TVShow_dict = {'TVShow_object': TVShow_object}
-                TVShow_listing.append(TVShow_dict)
-            search_string = " ".join((search_string, request.GET['mark']))
-        if len(TVShow_listing) > 0:
-            return render_to_response('LikeSeries/results.html', {'search_string': search_string,
-                                                       'TVShow_listing': TVShow_listing})
-    form = TVShowForm()
-    return render(request,'LikeSeries/index.html', {'form': form})
-'''
-def search_serie(request):
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
-        if form.is_valid():
-            template = loader.get_template('LikeSeries/results.html')
 
-            serie_id = api_call.Api_call.get_tv_id(request.POST['search'])
+def search(request):
+    if request.method == 'POST':
+        form = TVShowForm(request.POST)
+        if form.is_valid():
+            api = api_call.Api_call()
+            template = loader.get_template('LikeSeries/results.html')
+            serie_id = api.get_tv_id(request.POST['title'])
+            print(serie_id)
             response = []
             for i in range(0, len(serie_id)):
-                response.append(api_call.Api_call.get_serie())
-            context = {'response':response}
+                serie = api.get_serie(serie_id[i])
+                response.append(serie)
+                print(response)
+            context = {'response': response}
             return HttpResponse(template.render(request=request, context=context))
         else:
             raise EnvironmentError
     else:
-        form = SearchForm()
+        form = TVShowForm()
+    return render(request, 'LikeSeries/index.html', {'form': form})
 
-    return render(request, 'LikeSeries/index.html', {'form':form})
-'''
+# fonction qui récupère l'id/l'objet de la série sur laquelle on a cliqué dans la page results
+def TVShowPage(request):
+    tv_id = request.GET.get('tv_id')
+    api = api_call.Api_call()
+    serie = api.get_serie(tv_id)
+    person = api.want_person('tv_id')
+    context = {'serie': serie, 'person': person}
+    template = loader.get_template('LikeSeries/TVShow_page.html')
+    return HttpResponse(template.render(request=request, context=context))
+
+# fonction qui permet de liker les séries et de former une base de données à partir de cette action
+def Save_like(request):
+    if request.method == 'POST':
+        like = LikeForm(request.POST)
+    else:
+        raise EnvironmentError
+
