@@ -16,8 +16,10 @@
                     <li>{{item.name}}</li>
                     <li>{{item.overview}}</li>
                 </ul>
+                <a href = "{% url 'LikeSeries:TVShow_page' 1399 %}">
                 <img id="resultsImg" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" style="float:left;width:161px;height:240px;"
                      alt="Image de la série" />
+                </a>
             </div>
             <br>
         {% endfor %}
