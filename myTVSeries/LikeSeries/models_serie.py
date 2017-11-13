@@ -1,6 +1,6 @@
 from django.db import models
 
-class TVShow():
+class Serie():
 
     def __init__(self, dict):
         for i,j in dict.items():

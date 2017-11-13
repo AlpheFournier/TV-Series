@@ -3,11 +3,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css?family=Anton|Muli:400,600" rel="stylesheet">
 <style>
 body {font-family: "Lato", sans-serif}
 h1,h2,h3,h4,h5,h6 {
-    font-family: "Lato";
-    letter-spacing: 5px;
+    font-family: "Lato", sans-serif;
+    letter-spacing: 1px;
+}
+.titleTV {
+    font-family: 'Muli', sans-serif;
+    font-weight: 600;
+}
+.logo {
+font-family: 'Anton', sans-serif;
+font-size: 25px;
 }
 .mySlides{
 display: none;
@@ -30,15 +40,12 @@ background-color: transparent;
 <script>
 var slideIndex = 1;
 showDivs(slideIndex);
-
 function plusDivs(n) {
    showDivs(slideIndex += n);
 }
-
 function currentDiv(n) {
    showDivs(slideIndex = n);
 }
-
 function showDivs(n) {
   var i;
   var x = document.getElementsByClassName("mySlides");
@@ -62,7 +69,7 @@ function showDivs(n) {
 <!-- Navbar (sit on top) -->
 <div class="w3-top">
   <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
-      <a href="#home" class="w3-bar-item w3-button">My TVSeries</a>
+      <a href="#home" class="w3-bar-item w3-button logo">My TVSeries</a>
     <!-- Right-sided navbar links. Hide them on small screens -->
     <div class="w3-right w3-hide-small">
         <a href="{% url 'LikeSeries:index' %}" class="w3-bar-item w3-button">Rechercher une série</a>
@@ -86,13 +93,11 @@ function showDivs(n) {
 
 <head>
 <style>
-
 #section {
     width:650px;
     float:left;
     padding:10px;
 }
-
 </style>
 </head>
 <body>

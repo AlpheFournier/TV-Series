@@ -1,58 +1,39 @@
-<!DOCTYPE html>
-<html>
-<title>W3.CSS Template</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<head>
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<style>
-body {font-family: "Lato", sans-serif}
-h1,h2,h3,h4,h5,h6 {
-    font-family: "Lato", sans-serif;
-    letter-spacing: 5px;
-}
-</style>
+{% extends 'base.html' %}
 
 <body>
 
-<!-- Navbar (sit on top) -->
-<div class="w3-top">
-  <div class="w3-bar w3-white w3-padding w3-card" style="letter-spacing:4px;">
-      <a href="#home" class="w3-bar-item w3-button">My TVSeries</a>
-    <!-- Right-sided navbar links. Hide them on small screens -->
-    <div class="w3-right w3-hide-small">
-      <a href="#Ma_bibliothèque" class="w3-bar-item w3-button">Ma Bibliothèque</a>
-      <a href="#Rechercher_une_série" class="w3-bar-item w3-button">Rechercher une série</a>
-      <a href="#Ajouter_une_série" class="w3-bar-item w3-button">Ajouter une série</a>
-    </div>
-  </div>
-</div>
+{% block content %}
 
 <!-- Content -->
-<div class="w3-content" style="max-width:1100px;margin-top:80px;margin-bottom:80px">
+<div class="w3-content " style="max-width:1100px;margin-top:120px;margin-bottom:80px">
 
-<div class="w3-container w3-white w3-padding w3-card ">
-  <h2 class="w3-xxlarge"> Nom de la série</h2>
-</div>
 
-  <div class="w3-row w3-padding-64">
-    <div class="w3-twothird w3-container">
-      <h1 class="w3-text-black w3-xlarge">Résumé</h1>
-      <p>...</p>
-        <h2 class="w3-medium">Acteurs:</h2>
-            {% for item in person %}
-            <p>{{ item.name }}</p>
-            {% endfor %}
-      <h3 class="w3-medium">Réalisateur: </h3>
-      <h4 class="w3-medium">Note des spectateurs: </h4>
-      <form method="POST"> <button type="submit" class="w3-button w3-circle w3-blue">+</button> </form>
+    <div class="w3-container w3-padding w3-card ">
+        <h2 class="w3-xxlarge titleTV">Nom de la série : {{ serie.name }} <span style="font-size: 15px; float: right; display: inline-block">{{ serie.vote_average }} /10 </h2>
     </div>
 
-    <div class="w3-third w3-container">
-      <p class="w3-border w3-padding-large w3-padding-32 w3-center"></p>
-        <img src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjMwNzk5Nzg2OV5BMl5BanBnXkFtZTgwMjg1OTk1NDE@._V1_UY1200_CR96,0,630,1200_AL_.jpg" alt= "la requête a échouée" style="width:100%">
-    </div>
-  </div>
+    <div class="w3-row w3-padding-64">
+        <div class="w3-third w3-container">
+          <p class="w3-border w3-padding-large w3-padding-32 w3-center"</p>
+            <img src="https://image.tmdb.org/t/p/w500{{serie.poster_path}}" alt= "la requête a échouée" style="width:100%">
+            <form method="POST"> <button type="submit" class="w3-button w3-circle w3-blue" style="margin-top: -35px;margin-right: -20px; float: right"><i class="fa fa-thumbs-up" aria-hidden="true"></i></button> <form>
+        </div>
+        <div class="w3-twothird w3-container">
+            <h1 class="w3-xlarge">Résumé</h1>
+            <p>{{serie.overview}}</p>
+            <h2 class="w3-xlarge">Acteurs</h2>
+                {% for item in actors %}
+                <li>{{ item.name }} : {{item.character}}</li>
+                {% endfor %}
+            <h3 class="w3-xlarge">Réalisateur</h3>
+                {% for item in serie.created_by %}
+                <li>
+                  {{item.name}}
+                </li>
+                {% endfor %}
+        </div>
+
 </div>
+
+{% endblock %}
 </body>
-</html>

@@ -1,8 +1,4 @@
 import requests
-import sys
-sys.path.append('.')
-import LikeSeries.models_serie
-import LikeSeries.models_person
 
 class Api_call:
     url = "https://api.themoviedb.org/3/"
@@ -20,46 +16,25 @@ class Api_call:
 
     def get_serie(self,query):
         resp = requests.get(Api_call.url + "tv/" + str(query) + Api_call.api_key)
-        result = LikeSeries.models_serie.TVShow(resp.json())
-        return result
-
-    def get_serie_name(self, query):
-        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
-        answer = []
-        for element in resp.json()['results']:
-            answer.append(element['name'])
-        return answer
-
-    def get_serie_director(self, query):
-        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
-        answer = []
-        director = resp.json().get('created_by')
-        for element in director['results']:
-            answer.append(element['name'])
-        return answer
-
-    def get_serie_overview(self, query):
-        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
-        answer = []
-        for element in resp.json()['results']:
-            answer.append(element['overview'])
-        return answer
+        serie = resp.json()
+        return serie
 
     def get_serie_actors(self, query):
-        resp = requests.get(Api_call.url + "/tv" + str(query) + "/credits" + Api_call.api_key)
-        answer = []
-        actor = resp.json().get('cast')
-        for element in actor['results']:
-            answer.append(element['name'])
-        return answer
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/credits" + Api_call.api_key)
+        actor = resp.json()['cast']
+        return actor
 
-    def want_person(self, query):
+    def get_person_id(self, query):
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query=" + query)
         answer = []
-        for element in resp.json()['results']:
-            x = LikeSeries.models_person.Person(element)
-            answer.append(x)
+        for item in resp.json()['results']:
+            answer.append(item['id'])
         return answer
+
+    def get_person(self,query):
+        resp = requests.get(Api_call.url + "person/" + str(query) + Api_call.api_key)
+        actor = resp.json()
+        return actor
 
     def want_picture(self, query):
         resp = requests.get(Api_call.url + "tv/" + str(query) + "/images" + Api_call.api_key)
