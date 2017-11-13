@@ -51,8 +51,3 @@ class Api_call:
             answer.append(element['name'])
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
-
-id = 1399
-Apic = Api_call()
-a = Apic.get_serie_actors(id)
-print(a)
