@@ -105,11 +105,11 @@ function showDivs(n) {
 
     <main>
 
-#Afficher les résultats de la requête:
+<!--#Afficher les résultats de la requête:-->
 
     <div id = "results_page">
         Page de résultat de la recherche, voici les résultats :
-        <!--{% for item in response %}
+        {% for item in response %}
             <div>
                 <ul>
                     <li>{{item.name}}</li>
@@ -119,7 +119,7 @@ function showDivs(n) {
                      alt="Image de la série" />
             </div>
             <br>
-        {% endfor %}-->
+        {% endfor %}
     </div>
     </main>
 </html>

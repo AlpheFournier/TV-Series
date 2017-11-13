@@ -20,15 +20,15 @@ class Api_call:
 
     def get_serie(self,query):
         resp = requests.get(Api_call.url + "tv/" + str(query) + Api_call.api_key)
-        result = LikeSeries.models_serie.TVShow(resp.json())
-        return result
+        serie = resp.json()
+        #result = LikeSeries.models_serie.Serie(resp.json())
+        return serie
 
     def get_serie_name(self, query):
-        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
-        answer = []
-        for element in resp.json()['results']:
-            answer.append(element['name'])
-        return answer
+        resp = requests.get(Api_call.url + "tv/" + str(query) + Api_call.api_key)
+        answer = resp.json()
+        name = answer.get('name')
+        return name
 
     def get_serie_director(self, query):
         resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
@@ -76,3 +76,8 @@ class Api_call:
             answer.append(element['name'])
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
+
+i = 1399
+Apic = Api_call()
+Serie = Apic.get_serie(i)
+print(Serie)

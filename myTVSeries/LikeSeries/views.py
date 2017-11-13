@@ -61,9 +61,9 @@ def search(request):
             print(serie_id)
             response = []
             for i in range(0, len(serie_id)):
-                serie = api.get_serie(serie_id[i])
+                serie = api.get_serie(serie_id[0])
                 response.append(serie)
-                print(response)
+            print(response)
             context = {'response': response}
             return HttpResponse(template.render(request=request, context=context))
         else:
