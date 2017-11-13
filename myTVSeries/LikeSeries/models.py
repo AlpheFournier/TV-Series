@@ -147,6 +147,7 @@ class Person(models.Model):
 
 class Like(models.Model):
     like_counter = models.IntegerField()
+    add = models.CharField(max_length=500)
 
 
 

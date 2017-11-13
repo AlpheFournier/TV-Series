@@ -1,4 +1,4 @@
-import requests
+"""import requests
 from LikeSeries.models import TVShow, Person
 
 class Api_call:
@@ -28,6 +28,29 @@ class Api_call:
         result = TVShow(resp.json())
         return result
 
+    def get_serie_director(self, query):
+        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
+        answer = []
+        director = resp.json().get('created_by')
+        for element in director['results']:
+            answer.append(element['name'])
+        return answer
+
+    def get_serie_overview(self, query):
+        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
+        answer = []
+        for element in resp.json()['results']:
+            answer.append(element['overview'])
+        return answer
+
+    def get_serie_actors(self, query):
+        resp = requests.get(Api_call.url + "/tv" + str(query) + "/credits" + Api_call.api_key)
+        answer = []
+        actor = resp.json().get('cast')
+        for element in actor['results']:
+            answer.append(element['name'])
+        return answer
+
     def want_person(self, query):
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query" + query)
         answer = []
@@ -51,3 +74,6 @@ class Api_call:
             answer.append(element['name'])
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
+
+
+"""

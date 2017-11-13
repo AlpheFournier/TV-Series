@@ -76,8 +76,9 @@ def TVShowPage(request):
     tv_id = request.GET.get('tv_id')
     api = api_call.Api_call()
     serie = api.get_serie(tv_id)
-    person= api.want_person('tv_id')
-    context = {'serie': serie, 'person': person}
+    person= api.want_person(tv_id)
+    image=api.want_picture(tv_id)
+    context = {'serie': serie, 'person': person, 'image': image}
     template = loader.get_template('LikeSeries/TVShow_page.html')
     return HttpResponse(template.render(request=request, context=context))
 
@@ -106,4 +107,3 @@ def Save_like(request):
         form = TVShowForm()
     return render(request, 'LikeSeries/index.html', {'form':form})
 """
-

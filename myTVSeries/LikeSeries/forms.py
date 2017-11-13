@@ -13,10 +13,10 @@ class TVShowForm(forms.ModelForm):
         model = TVShow
         fields = ("title", "director","actors", "gender", )
 
-class LikeForm(forms.ModeForm):
+class LikeForm(forms.ModelForm):
 
     class Meta:
         model=Like
-        fields=("add",)
+        fields=('add',)
 
 
