@@ -53,6 +53,16 @@ def Season_Page(request,tv_id,season_number):
     template = loader.get_template('LikeSeries/Season.html')
     return HttpResponse(template.render(request=request, context=context))
 
+#Page correspondant à un épisode d'une saison d'une série donnée
+def Episode_Page(request,tv_id,season_number, episode_number):
+    api = api_call.Api_call()
+    serie = api.get_serie(tv_id)
+    season = api.get_season(tv_id, season_number)
+    episode = api.get_episode(tv_id, season_number, episode_number)
+    context = {'serie': serie, 'season': season, 'episode': episode}
+    template = loader.get_template('LikeSeries/Episode.html')
+    return HttpResponse(template.render(request=request, context=context))
+
 # fonction qui permet de liker les séries et de former une base de données à partir de cette action
 def Save_like(request):
     if request.method == 'POST':

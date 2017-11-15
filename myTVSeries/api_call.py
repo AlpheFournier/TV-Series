@@ -29,6 +29,11 @@ class Api_call:
         season = resp.json()
         return season
 
+    def get_episode(self, query, don, quete):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/season/" + str(don) + "/episode/" + str(quete) + Api_call.api_key)
+        episode = resp.json()
+        return episode
+
     def get_person_id(self, query):
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query=" + query)
         answer = []
