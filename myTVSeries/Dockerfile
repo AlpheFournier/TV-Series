@@ -7,3 +7,4 @@ WORKDIR /code
 RUN mkdir /logs
 RUN touch /logs/logs.log
 RUN pip install Django==1.11
+RUN pip install requests
