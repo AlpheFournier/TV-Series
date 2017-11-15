@@ -24,6 +24,11 @@ class Api_call:
         actor = resp.json()['cast']
         return actor
 
+    def get_season(self, query, don):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/season/" + str(don) + Api_call.api_key)
+        season = resp.json()
+        return season
+
     def get_person_id(self, query):
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query=" + query)
         answer = []
@@ -51,3 +56,4 @@ class Api_call:
             answer.append(element['name'])
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
+
