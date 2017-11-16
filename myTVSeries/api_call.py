@@ -47,8 +47,9 @@ class Api_call:
         return actor
 
     def get_tv_credits(self,query):
-        resp = requests.get(Api_call.url + "person/" + str(query) + "/tv_credits/" + Api_call.api_key)
-        tv_credits = resp.json()
+        resp = requests.get(Api_call.url + "person/" + str(query) + "/tv_credits" + Api_call.api_key)
+        tv_credits = resp.json()['cast']
+        print(tv_credits)
         return tv_credits
 
     def want_picture(self, query):
