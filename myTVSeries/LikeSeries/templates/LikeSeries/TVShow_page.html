@@ -29,7 +29,7 @@
             <p>{{serie.overview}}</p>
             <h2 class="w3-xlarge">Acteurs</h2>
                 {% for item in actors %}
-                <li>{{ item.name }} : {{item.character}}</li>
+                <li><a href="{% url 'LikeSeries:Actor_Page' item.id %}">{{ item.name }}</a> : {{item.character}}</li>
                 {% endfor %}
             <h3 class="w3-xlarge">Réalisateur</h3>
                 {% for item in serie.created_by %}
