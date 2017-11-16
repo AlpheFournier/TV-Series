@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+<body>
+
+{% block content %}
+<div class="w3-content " style="max-width:1100px;margin-top:120px;margin-bottom:80px">
+
+    <main>
+
+<!--#Afficher les résultats de la requête:-->
+
+        <h1 class="w3-xlarge">Résultats de votre recherche : </h1>
+        <h2 class="w3-small">Cliquez sur l'image pour plus de détails</h2>
+        {% for item in response %}
+            <div class="w3-container w3-padding w3-card w3-light-grey">
+                <div class="w3-third w3-container">
+                    <a href = "{% url 'LikeSeries:TVShow_page' item.id %}">
+                    <img id="resultsImg" src="https://image.tmdb.org/t/p/w500{{item.poster_path}}" style="float:left;width:161px;height:240px;"
+                     alt="Image de la série" />
+                    </a>
+                </div>
+                <ul>
+                    <li><h2 class="w3-xlarge"><b> {{item.name}} </b></h2></li>
+                    <li>{{item.overview}}</li>
+                </ul>
+            </div>
+            <br>
+        {% endfor %}
+    </main>
+</div>
+{% endblock content %}
+</html>
+</body>

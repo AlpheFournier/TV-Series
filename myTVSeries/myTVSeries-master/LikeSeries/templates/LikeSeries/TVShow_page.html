@@ -1,0 +1,52 @@
+
+{% extends 'base.html' %}
+
+<body>
+
+{% block content %}
+
+<!-- Content -->
+<div class="w3-content " style="max-width:1100px;margin-top:120px;margin-bottom:80px">
+
+
+    <div class="w3-container w3-padding w3-card ">
+        <h2 class="w3-xxlarge titleTV"> {{ serie.name }} <span style="font-size: 15px; float: right; display: inline-block">{{ serie.vote_average }} /10 </h2>
+    </div>
+
+    <div class="w3-row w3-padding-64">
+        <div class="w3-third w3-container">
+          <p class="w3-border w3-padding-large w3-padding-32 w3-center"</p>
+            <img src="https://image.tmdb.org/t/p/w500{{serie.poster_path}}" alt= "Pas d'image disponible" style="width:100%">
+            <form method="post" action="{% url 'LikeSeries:TVShowPage' %}">
+                {% csrf_token %}
+                <input type="hidden" name="tv_id_liked" value="{{ serie.id }}">
+                <button type="submit" class="w3-button w3-circle w3-blue" style="margin-top: -35px;margin-right: -20px; float: right">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                </button>
+                <form>
+            <h1 class="w3-xlarge">Seasons</h1>
+                {% for item in serie.seasons %}
+                <li>
+                    <a href="{% url 'LikeSeries:Season_Page' serie.id item.season_number %}"> Season {{item.season_number}} </a>
+                </li>
+                {% endfor %}
+        </div>
+        <div class="w3-twothird w3-container">
+            <h1 class="w3-xlarge">Résumé</h1>
+            <p>{{serie.overview}}</p>
+            <h2 class="w3-xlarge">Acteurs</h2>
+                {% for item in actors %}
+                <li><a href="{% url 'LikeSeries:Actor_Page' item.id %}">{{ item.name }}</a> : {{item.character}}</li>
+                {% endfor %}
+            <h3 class="w3-xlarge">Réalisateur</h3>
+                {% for item in serie.created_by %}
+                <li>
+                  {{item.name}}
+                </li>
+                {% endfor %}
+        </div>
+
+</div>
+
+{% endblock %}
+</body>

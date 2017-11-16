@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+<body>
+
+{% block content %}
+
+<!-- Content -->
+<div class="w3-content " style="max-width:1100px;margin-top:120px;margin-bottom:80px">
+
+
+    <div class="w3-container w3-padding w3-card ">
+        <h2 class="w3-xxlarge titleTV"> {{ serie.name }} - S{{season.season_number}} - E{{episode.episode_number}} - {{episode.name}} <span style="font-size: 15px; float: right; display: inline-block"></span> </h2>
+    </div>
+
+    <div class="w3-row w3-padding-64">
+        <div class="w3-third w3-container">
+          <p class="w3-border w3-padding-large w3-padding-32 w3-center"</p>
+            <img src="https://image.tmdb.org/t/p/w500{{episode.still_path}}" alt= "Pas d'image disponible" style="width:100%">
+        </div>
+        <div class="w3-twothird w3-container">
+            <h1 class="w3-xlarge">Résumé</h1>
+            <p>{{episode.overview}}</p>
+            <p>Diffusion Date : {{episode.air_date}}</p>
+        </div>
+    </div>
+
+{% endblock %}
+</div>
