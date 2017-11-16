@@ -1,63 +1,56 @@
-"""import requests
-from LikeSeries.models import TVShow, Person
+import requests
 
 class Api_call:
     url = "https://api.themoviedb.org/3/"
     api_key = "?api_key=52d6a72d6078ec54905fb65e4c55c301"
 
-    def __int__(self):
+    def __init__(self):
         pass
 
-    def want_serie(self, query):
-        resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query" + query)
-        answer = []
-        for element in resp.json()['answer']:
-            x = TVShow(element)
-            answer.append(x)
-        return answer
-
     def get_tv_id(self,query):
-        resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query" + query)
+        resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query=" + query)
         answer = []
-        for element in resp.json()['answer']:
-            answer.append(element['id'])
+        for item in resp.json()['results']:
+            answer.append(item['id'])
         return answer
 
+#On récupère toutes les données de la série sous forme d'un dictionnaire json
     def get_serie(self,query):
-        resp = requests.get(Api_call.url + "tv/" + str(query) + "?" + Api_call.api_key)
-        result = TVShow(resp.json())
-        return result
-
-    def get_serie_director(self, query):
-        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
-        answer = []
-        director = resp.json().get('created_by')
-        for element in director['results']:
-            answer.append(element['name'])
-        return answer
-
-    def get_serie_overview(self, query):
-        resp = requests.get(Api_call.url + "/tv" + str(query) + Api_call.api_key)
-        answer = []
-        for element in resp.json()['results']:
-            answer.append(element['overview'])
-        return answer
+        resp = requests.get(Api_call.url + "tv/" + str(query) + Api_call.api_key)
+        serie = resp.json()
+        return serie
 
     def get_serie_actors(self, query):
-        resp = requests.get(Api_call.url + "/tv" + str(query) + "/credits" + Api_call.api_key)
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/credits" + Api_call.api_key)
+        actor = resp.json()['cast']
+        return actor
+
+    def get_season(self, query, don):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/season/" + str(don) + Api_call.api_key)
+        season = resp.json()
+        return season
+
+    def get_episode(self, query, don, quete):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/season/" + str(don) + "/episode/" + str(quete) + Api_call.api_key)
+        episode = resp.json()
+        return episode
+
+    def get_person_id(self, query):
+        resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query=" + query)
         answer = []
-        actor = resp.json().get('cast')
-        for element in actor['results']:
-            answer.append(element['name'])
+        for item in resp.json()['results']:
+            answer.append(item['id'])
         return answer
 
-    def want_person(self, query):
-        resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query" + query)
-        answer = []
-        for element in resp.json()['answer']:
-            x = Person(element)
-            answer.append(x)
-        return answer
+    def get_person(self,query):
+        resp = requests.get(Api_call.url + "person/" + str(query) + Api_call.api_key)
+        actor = resp.json()
+        return actor
+
+    def get_tv_credits(self,query):
+        resp = requests.get(Api_call.url + "person/" + str(query) + "/tv_credits/" + Api_call.api_key)
+        tv_credits = resp.json()
+        return tv_credits
 
     def want_picture(self, query):
         resp = requests.get(Api_call.url + "tv/" + str(query) + "/images" + Api_call.api_key)
@@ -70,10 +63,7 @@ class Api_call:
         resp = requests.get (Api_call.url + "discover/tv/" + Api_call.api_key + "&sor_by=vote_average.desc&page=1&include_null_first_air_dates=false'")
         ans = requests.get(resp)
         answer = []
-        for element in ans.json()['answer']:
+        for element in ans.json()['results']:
             answer.append(element['name'])
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
-
-
-"""

@@ -1,22 +1,17 @@
 # coding=utf-8
 
 from django import forms
-from .models import TVShow, Like
-
+from .models import TVShow, User_Likes
 
 #création du formulaire:
 
 class TVShowForm(forms.ModelForm):
-
     class Meta:
         """ Assigning the order of the fields"""
         model = TVShow
-        fields = ("title", "director","actors", "gender", )
+        fields = ["title"]
 
 class LikeForm(forms.ModelForm):
-
     class Meta:
-        model=Like
-        fields=('add',)
-
-
+        model = User_Likes
+        fields = ["like_action",]

@@ -19,6 +19,7 @@ from django.contrib import admin
 from signUp import views as signUp_views
 from django.contrib.auth import views as auth_views
 
+
 urlpatterns = [
     url(r'^LikeSeries/', include('LikeSeries.urls')),
     url(r'^admin/', admin.site.urls),

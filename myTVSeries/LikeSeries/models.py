@@ -1,9 +1,14 @@
 from django.db import models
-from django import forms
-
-from django.contrib import admin
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 
 # Create your models here.
+
+
+class User_Likes(models.Model):
+    user = models.ForeignKey(User)
+    tv_id_liked = models.TextField(default="{}")
+    like_action = models.BooleanField()
 
 class TVShow(models.Model):
 
@@ -15,76 +20,80 @@ class TVShow(models.Model):
         ('Action', 'Action'),
         ('Period', 'Period')
     )
+
     tv_id = models.IntegerField()
-    title = models.CharField(max_length=200)
+    title = models.CharField(max_length=200, blank=True)
     director = models.CharField(max_length=200, blank=True)
     language = models.CharField(max_length=20, blank=True)
     actors = models.CharField(max_length=200, blank=True)
     overview = models.CharField(max_length=30)
     gender = models.CharField(max_length=10,
-                             choices=GENRE_OPTIONS, blank=True)
-    vote_avg= models.IntegerField()
+                              choices=GENRE_OPTIONS, blank=True)
+    vote_avg = models.IntegerField()
 
+"""
+#Nos accesseurs
 
-    """def __init__(self, dic):
-        models.Model.__init__(self, dic)
+@property
+  def tv_id(self):
+      return self.tv_id
 
-        for i,j in dic.items():
-            setattr(self,i,j)"""
+  @property
+  def name(self):
+      return self.name
 
-    #Nos accesseurs
-    @property
-    def tv_id(self):
-        return self.tv_id
+  @property
+  def language(self):
+      return self.language
 
-    @property
-    def name(self):
-        return self.name
+  @property
+  def overview(self):
+      return self.overview
 
-    @property
-    def language(self):
-        return self.language
+  @property
+  def gender(self):
+      return self.gender
 
-    @property
-    def overview(self):
-        return self.overview
+  @property
+  def vote_avg(self):
+      return self.vote_avg
 
-    @property
-    def genre(self):
-        return self.genre
+  @property
+  def director(self):
+      return self.director
 
-    @property
-    def vote_avg(self):
-        return self.vote_avg
+  @tv_id.setter
+  def tv_id(self, value):
+      self._tv_id = value
 
-    @tv_id.setter
-    def tv_id(self, value):
-        self._tv_id = value
+  @name.setter
+  def name(self, value):
+      self._name = value
 
-    @name.setter
-    def name(self, value):
-        self._name = value
+  @language.setter
+  def language(self, value):
+      self._language = value
 
-    @language.setter
-    def language(self, value):
-        self._language = value
+  @overview.setter
+  def overview(self, value):
+      self._overview = value
 
-    @overview.setter
-    def overview(self, value):
-        self._overview = value
+  @gender.setter
+  def gender(self, value):
+      self._gender = value
 
-    @genre.setter
-    def genre(self, value):
-        self._genre = value
+  @vote_avg.setter
+  def vote_avg(self, value):
+      self._vote_avg = value
 
-    @vote_avg.setter
-    def vote_avg(self, value):
-        self._vote_avg = value
-
+  @director.setter
+  def director(self, value):
+      self.director = value """
 
 class Person(models.Model):
 
     def __init__(self,dic):
+        super(Person, self).__init__()
         for i,j in dic.items():
             setattr(self,i,j)
 
@@ -142,13 +151,6 @@ class Person(models.Model):
     @mark.setter
     def mark(self, value):
         self._mark = value
-
-
-
-class Like(models.Model):
-    like_counter = models.IntegerField()
-    add = models.CharField(max_length=500)
-
 
 
 
