@@ -57,8 +57,6 @@ ROOT_URLCONF = 'myTVSeries.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        # (Max) à modifier, peut être par :
-        #        'DIRS': [],
         'DIRS': [os.path.join(BASE_DIR, 'myTVSeries/../templates')],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -124,7 +122,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# (Max) A modifier éventuellement
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'

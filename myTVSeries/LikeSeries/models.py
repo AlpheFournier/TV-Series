@@ -7,8 +7,7 @@ from django.contrib.auth.models import User
 
 class User_Likes(models.Model):
     user = models.ForeignKey(User)
-    tv_id_liked = models.TextField(default="{}")
-    like_action = models.BooleanField()
+    tv_id_liked = models.TextField(default="[]")
 
 class TVShow(models.Model):
 

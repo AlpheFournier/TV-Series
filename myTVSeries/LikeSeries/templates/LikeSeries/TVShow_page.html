@@ -17,7 +17,7 @@
         <div class="w3-third w3-container">
           <p class="w3-border w3-padding-large w3-padding-32 w3-center"</p>
             <img src="https://image.tmdb.org/t/p/w500{{serie.poster_path}}" alt= "Pas d'image disponible" style="width:100%">
-            <form method="post" action="{% url 'LikeSeries:TVShowPage' %}">
+            <form method="post" action="{% url 'LikeSeries:Like' serie.id %}">
                 {% csrf_token %}
                 <input type="hidden" name="tv_id_liked" value="{{ serie.id }}">
                 <button type="submit" class="w3-button w3-circle w3-blue" style="margin-top: -35px;margin-right: -20px; float: right">

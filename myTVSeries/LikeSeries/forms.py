@@ -14,4 +14,4 @@ class TVShowForm(forms.ModelForm):
 class LikeForm(forms.ModelForm):
     class Meta:
         model = User_Likes
-        fields = ["like_action",]
+        fields = ["tv_id_liked",]
