@@ -24,6 +24,16 @@ class Api_call:
         actor = resp.json()['cast']
         return actor
 
+    def get_season(self, query, don):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/season/" + str(don) + Api_call.api_key)
+        season = resp.json()
+        return season
+
+    def get_episode(self, query, don, quete):
+        resp = requests.get(Api_call.url + "tv/" + str(query) + "/season/" + str(don) + "/episode/" + str(quete) + Api_call.api_key)
+        episode = resp.json()
+        return episode
+
     def get_person_id(self, query):
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query=" + query)
         answer = []
@@ -35,6 +45,12 @@ class Api_call:
         resp = requests.get(Api_call.url + "person/" + str(query) + Api_call.api_key)
         actor = resp.json()
         return actor
+
+    def get_tv_credits(self,query):
+        resp = requests.get(Api_call.url + "person/" + str(query) + "/tv_credits" + Api_call.api_key)
+        tv_credits = resp.json()['cast']
+        print(tv_credits)
+        return tv_credits
 
     def want_picture(self, query):
         resp = requests.get(Api_call.url + "tv/" + str(query) + "/images" + Api_call.api_key)
@@ -51,3 +67,4 @@ class Api_call:
             answer.append(element['name'])
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
+
