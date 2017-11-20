@@ -14,6 +14,7 @@ class Api_call:
             answer.append(item['id'])
         return answer
 
+# On recupere toutes les donnees de la serie sous forme d'un dictionnaire json:
     def get_serie(self,query):
         resp = requests.get(Api_call.url + "tv/" + str(query) + Api_call.api_key)
         serie = resp.json()

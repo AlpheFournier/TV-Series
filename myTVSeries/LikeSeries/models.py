@@ -1,6 +1,13 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 
 # Create your models here.
+
+
+class User_Likes(models.Model):
+    user = models.ForeignKey(User)
+    tv_id_liked = models.TextField(default="[]")
 
 class TVShow(models.Model):
 
@@ -22,7 +29,6 @@ class TVShow(models.Model):
     gender = models.CharField(max_length=10,
                               choices=GENRE_OPTIONS, blank=True)
     vote_avg = models.IntegerField()
-
 
 """
 #Nos accesseurs
@@ -83,9 +89,10 @@ class TVShow(models.Model):
   def director(self, value):
       self.director = value """
 
-class Person():
+class Person(models.Model):
 
     def __init__(self,dic):
+        super(Person, self).__init__()
         for i,j in dic.items():
             setattr(self,i,j)
 
@@ -144,8 +151,6 @@ class Person():
     def mark(self, value):
         self._mark = value
 
-class Like (models.Model):
-    like_counter = models.IntegerField()
 
 
 
