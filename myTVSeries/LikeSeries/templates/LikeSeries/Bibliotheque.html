@@ -4,10 +4,15 @@
 
 
 <!--Afficher les noms des séries likées:-->
-{% for serie in serie_liked %}
-    <p>{{serie.name}}
-    {{serie.popularity}}
-    </p>
-{% endfor %}
-
-{% endblock %}
+<div class="w3-container w3-padding w3-card w3-light-grey">
+    <h1 class="w3-xxlarge w3-center"><b> Vos séries préférées </b><i class="fa fa-thumbs-up" aria-hidden="true" style="color:deepskyblue;"></i></h1>
+</div><br />
+        <div style="margin: 20px;">
+        {% for serie in serie_liked %}
+            <p><li class= "w3-large" style="line-height:15px;">
+                    <b><a href = "{% url 'LikeSeries:TVShow_page' serie.id %}">{{serie.name}}</a></b>
+                <h1 class="w3-small">Note de popularité: {{serie.popularity}} </h1>
+            </li></p>
+        {% endfor %}
+        </div>
+        {% endblock %}
