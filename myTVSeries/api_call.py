@@ -72,17 +72,29 @@ class Api_call:
         return answer
 
     def get_person(self,query):
+        """
+        :param query: Person's id
+        :return: Returns a person
+        """
         resp = requests.get(Api_call.url + "person/" + str(query) + Api_call.api_key)
         actor = resp.json()
         return actor
 
     def get_tv_credits(self,query):
+        """
+        :param query: Person's id
+        :return: Returns a list of the person's series
+        """
         resp = requests.get(Api_call.url + "person/" + str(query) + "/tv_credits" + Api_call.api_key)
         tv_credits = resp.json()['cast']
         print(tv_credits)
         return tv_credits
 
     def want_picture(self, query):
+        """
+        :param query: Serie's id
+        :return: Returns a picture of the serie
+        """
         resp = requests.get(Api_call.url + "tv/" + str(query) + "/images" + Api_call.api_key)
         ans = resp.json()
         image = ans.get('backdrops')[0].get('file_path')
@@ -90,6 +102,9 @@ class Api_call:
         return(url_image)
 
     def discover_serie(self):
+        """
+        :return: Returns the twenty best series
+        """
         resp = requests.get (Api_call.url + "discover/tv/" + Api_call.api_key + "&sor_by=vote_average.desc&page=1&include_null_first_air_dates=false'")
         ans = requests.get(resp)
         answer = []
@@ -99,6 +114,10 @@ class Api_call:
         return answer
 
     def next_episodes(self, tv_id):
+        """
+        :param tv_id:
+        :return: Dictionnary with tv_id and the next episode
+        """
         resp = requests.get(Api_call.url + "tv/" + str(tv_id) + Api_call.api_key)
         serie = resp.json()
         last_season = 1
@@ -109,52 +128,42 @@ class Api_call:
         season = resp.json()
         today = datetime.now()
         if season['air_date'] == None:
-            return {tv_id: {}}
+            dict = {}
+            dict['tv_id'] = tv_id
+            return dict
         date_first_episode = datetime.strptime(season['air_date'], "%Y-%m-%d")
         if (date_first_episode - today).days > 0:
-            return {tv_id: season['episodes'][0]}
+            dict = season['episodes'][0]
+            dict['tv_id'] = tv_id
+            return dict
         elif (date_first_episode - today).days < 0:
             for episode in season['episodes']:
                 date_episode = datetime.strptime(episode['air_date'], "%Y-%m-%d")
                 if date_episode > today:
                     if (date_episode - today).days <= 7:
-                        return {tv_id: episode}
+                        dict = episode
+                        dict['tv_id'] = tv_id
+                        return dict
         return {tv_id: {}}
-
-    def infos_next_episodes(self, series_list):
-        result = []
-        for series in series_list:
-            list_season = []
-            episode = {}
-            if series['status'] == 'Returning Series':
-                if len(series['seasons']) == 1:
-                    list_season = [0]
-                else:
-                    list_season = [0] * (len(series['seasons']) - 1)
-                episode = self.next_episodes(series['id'], list_season)
-                if episode[series['id']] == {}:
-                    if series['networks'] != [] and series['networks'][0].get['name'] == 'Netflix':
-                        series.is_netflix = True
-                    else:
-                        series.is_netflix = False
-                    series.is_coming_soon = False
-                else:
-                    series.is_coming_soon = True
-                    series.episode_coming_soon_name = episode[series.id]['name']
-                    series.episode_coming_soon_air_date = episode[series.id]['air_date']
-            else:
-                series.is_coming_soon = False
-            result.append(series)
-        return result
 
 
 
     def LikeSerie(self, user, tv_id):
+        """
+        :param user: Current user
+        :param tv_id: Serie's id
+        :return: Save in the data base a new object UserLikes
+        """
         newEntry=UserLikes(user=user,tv_id_liked=tv_id)
         newEntry.save()
         return 'OK'
 
 
     def RemoveLike(self, user, tv_id):
+        """
+        :param user: Current user
+        :param tv_id: Serie's id
+        :return: Remove in the data base the object UserLikes
+        """
         UserLikes.objects.filter(user_id=user.id,tv_id_liked=tv_id).delete()
         return 'OK'

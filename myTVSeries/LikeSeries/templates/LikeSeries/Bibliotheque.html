@@ -7,29 +7,38 @@
 <div class="w3-container w3-padding w3-card w3-light-grey">
     <h1 class="w3-xxlarge w3-center"><b> Vos séries préférées </b><i class="fa fa-thumbs-up" aria-hidden="true" style="color:deepskyblue;"></i></h1>
 </div><br />
-        <div style="margin: 20px;">
-        {% for serie in serie_liked %}
-            <div class="w3-container w3-padding w3-card w3-light-grey">
-                <div class="w3-third w3-container">
-                        <a href = "{% url 'LikeSeries:TVShow_page' serie.id %}">
-                        <img id="resultsImg" src="https://image.tmdb.org/t/p/w500{{serie.backdrop_path}}" style="float:left;width:350px;height:150px;"
-                         alt="Image de la série" />
-                        </a>
-                </div>
-                <p><li class= "w3-large" style="line-height:15px;">
+<div style="margin: 20px;">
+    {% for serie in serie_liked %}
+        <div class="w3-container w3-padding w3-card w3-light-grey">
+            <div class="w3-third w3-container">
+                    <a href = "{% url 'LikeSeries:TVShow_page' serie.id %}">
+                    <img id="resultsImg" src="https://image.tmdb.org/t/p/w500{{serie.backdrop_path}}" style="float:left;width:350px;height:150px;"
+                     alt="Image de la série" />
+                    </a>
+            </div>
+            <p>
+                <li class= "w3-large" style="line-height:15px;">
                         <b><a href = "{% url 'LikeSeries:TVShow_page' serie.id %}">{{serie.name}}</a></b>
                     <h1 class="w3-small">Nombre de saisons: {{serie.number_of_seasons}} </h1>
                     <h1 class="w3-small">Nombre d'épisodes: {{serie.number_of_episodes}} </h1>
-                </li></p>
-                <form method="post" action="{% url 'LikeSeries:Remove' serie.id %}">
-                  {% csrf_token %}
-                  <input type="hidden" name="tv_id_liked" value="{{ serie.id }}">
-                  <button type="submit" class="w3-button w3-circle w3-red" style="margin-top: -35px;margin-right: 0px; float: right">
-                      <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                  </button>
-                 <form>
-            </div>
-            <br>
-        {% endfor %}
+                    <h1 class="w3-small" style="color:red;font-weight:bold">
+                        {% for element in next_episodes %}
+                            {% if element.tv_id == serie.id %}
+                                Next Episode :  {{element.air_date}}
+                            {% endif %}
+                        {% endfor %}
+                    </h1>
+                </li>
+            </p>
+            <form method="post" action="{% url 'LikeSeries:Remove' serie.id %}">
+              {% csrf_token %}
+              <input type="hidden" name="tv_id_liked" value="{{ serie.id }}">
+              <button type="submit" class="w3-button w3-circle w3-red" style="margin-top: -35px;margin-right: 0px; float: right">
+                  <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+              </button>
+             </form>
         </div>
-        {% endblock %}
+        <br>
+    {% endfor %}
+</div>
+{% endblock %}

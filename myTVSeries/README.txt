@@ -1,3 +1,41 @@
+Bonjour Monsieur Poli et soyez le bienvenu sur ce projet !
+Nous avons utilisé Docker durant le développement de ce projet, mais voici nos recommandations afin de lancer notre projet :
+
+1 - Installer python 3.4
+
+2 - Installer Django 1.11
+
+    RUN pip install Django==1.11
+
+3 - Installer requests
+
+    RUN pip install requests
+
+4 - Installer psycopg2
+
+    RUN pip install psycopg2
+
+5 - Se placer dans le dossier et lancer le projet avec :
+
+    python manage.py runserver
+
+6 - lancer http://localhost:8000 dans un navigateur
+
+7 - Bon courage :)
+
+
+
+Au cas où, notre projet se trouve ici : https://github.com/Irisa7/TV-Series
+
+
+
+
+
+
+
+
+/////// Consignes internes pour le développement du projet ////////
+
 Prérequis : avoir installé Docker
 
 1 - Se placer dans son dossier de travail (racine)
