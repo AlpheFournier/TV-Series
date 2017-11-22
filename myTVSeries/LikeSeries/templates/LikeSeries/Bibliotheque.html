@@ -24,7 +24,9 @@
                     <h1 class="w3-small" style="color:red;font-weight:bold">
                         {% for element in next_episodes %}
                             {% if element.tv_id == serie.id %}
-                                Next Episode :  {{element.air_date}}
+                                {% if element.air_date != None %}
+                                    Next Episode :  {{element.air_date}}
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     </h1>
