@@ -10,6 +10,10 @@ class Api_call:
         pass
 
     def get_tv_id(self,query):
+        """
+        :param query: Corresponding to the search of the user
+        :return: Returns a list of the series' ids
+        """
         resp = requests.get(Api_call.url + "search/tv" + Api_call.api_key + "&query=" + query)
         answer = []
         for item in resp.json()['results']:
@@ -18,26 +22,49 @@ class Api_call:
 
 # On recupere toutes les donnees de la serie sous forme d'un dictionnaire json:
     def get_serie(self,query):
+        """
+        :param query: Serie's id
+        :return: Returns the serie corresponding to the id
+        """
         resp = requests.get(Api_call.url + "tv/" + str(query) + Api_call.api_key)
         serie = resp.json()
         return serie
 
     def get_serie_actors(self, query):
+        """
+        :param query: Serie's id
+        :return: Returns an actors' list corresponding to the serie's id
+        """
         resp = requests.get(Api_call.url + "tv/" + str(query) + "/credits" + Api_call.api_key)
         actor = resp.json()['cast']
         return actor
 
     def get_season(self, query, don):
+        """
+        :param query: Serie's id
+        :param don: Season's number of the serie
+        :return: Returns the season corresponding to the serie's id and its number
+        """
         resp = requests.get(Api_call.url + "tv/" + str(query) + "/season/" + str(don) + Api_call.api_key)
         season = resp.json()
         return season
 
     def get_episode(self, query, don, quete):
+        """
+        :param query: Serie's id
+        :param don: Season's number of the serie
+        :param quete: Episode's number of the season
+        :return: Returns the episode corresponding to the serie's id, its season's number ans its episode's number
+        """
         resp = requests.get(Api_call.url + "tv/" + str(query) + "/season/" + str(don) + "/episode/" + str(quete) + Api_call.api_key)
         episode = resp.json()
         return episode
 
     def get_person_id(self, query):
+        """
+        :param query: Corresponding to the search of the user
+        :return: Returns a list of the person' ids
+        """
         resp = requests.get(Api_call.url + "search/person" + Api_call.api_key + "&query=" + query)
         answer = []
         for item in resp.json()['results']:
@@ -71,30 +98,27 @@ class Api_call:
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
 
-    def next_episodes(self, tv_id, list):
-        list_id = list
-        while len(list_id) != 0:
-            resp = requests.get(Api_call.url + "tv/" + str(tv_id) + Api_call.api_key)
-            serie = resp.json()
-            last_season = 1
-            # On va chercher la derniere saison existante
-            for item in serie.seasons :
-                last_season = item.season_number
-            resp = requests.get(Api_call.url + "tv/" + str(tv_id) + "/season/" + str(last_season) + Api_call.api_key)
-            season = resp.json()
-            today = datetime.now()
-            if season['air date'] == None:
-                return {tv_id: {}}
-            date_first_episode = datetime.strptime(season['air_date'], "%Y-%m-%d")
-            result = []
-            if (today - date_first_episode).days > 0 and (today - date_first_episode).days < 365:
-                for episode in season['episodes']:
-                    date_episode = datetime.strptime(episode['air_date'], "%Y-%m-%d")
-                    if date_episode > today:
-                        if (date_episode - today).days <= 7:
-                            return {tv_id: episode}
-            else:
-                list_id = list_id[1:]
+    def next_episodes(self, tv_id):
+        resp = requests.get(Api_call.url + "tv/" + str(tv_id) + Api_call.api_key)
+        serie = resp.json()
+        last_season = 1
+        # On va chercher la derniere saison existante
+        for item in serie['seasons']:
+            last_season = item['season_number']
+        resp = requests.get(Api_call.url + "tv/" + str(tv_id) + "/season/" + str(last_season) + Api_call.api_key)
+        season = resp.json()
+        today = datetime.now()
+        if season['air_date'] == None:
+            return {tv_id: {}}
+        date_first_episode = datetime.strptime(season['air_date'], "%Y-%m-%d")
+        if (date_first_episode - today).days > 0:
+            return {tv_id: season['episodes'][0]}
+        elif (date_first_episode - today).days < 0:
+            for episode in season['episodes']:
+                date_episode = datetime.strptime(episode['air_date'], "%Y-%m-%d")
+                if date_episode > today:
+                    if (date_episode - today).days <= 7:
+                        return {tv_id: episode}
         return {tv_id: {}}
 
     def infos_next_episodes(self, series_list):
