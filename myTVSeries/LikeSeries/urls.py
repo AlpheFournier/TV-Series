@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from .views import search, TVShowPage, Save_like, Season_Page, Episode_Page, Actor_Page, Afficher_series_liked
+from .views import search, TVShowPage, Save_like, Season_Page, Episode_Page, Actor_Page, Afficher_series_liked, Remove_like
 
 app_name = 'LikeSeries'
 urlpatterns = [
