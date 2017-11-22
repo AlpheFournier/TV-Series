@@ -1,3 +1,0 @@
-
-
-#admin.site.register(Question)
