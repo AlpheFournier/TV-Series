@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django import forms
-from .models import TVShow, User_Likes
+from .models import TVShow, UserLikes
 
 #création du formulaire:
 
@@ -13,5 +13,5 @@ class TVShowForm(forms.ModelForm):
 
 class LikeForm(forms.ModelForm):
     class Meta:
-        model = User_Likes
+        model = UserLikes
         fields = ["tv_id_liked",]

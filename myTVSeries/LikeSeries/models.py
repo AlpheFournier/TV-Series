@@ -1,13 +1,19 @@
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
 
-class User_Likes(models.Model):
+"""class User_Likes(models.Model):
     user = models.ForeignKey(User)
-    tv_id_liked = models.TextField(default="[]")
+    tv_id_liked = models.TextField(default="[]")"""
+
+class UserLikes(models.Model):
+    user = models.ForeignKey(User)
+    tv_id_liked = models.CharField(max_length=100)
+
 
 class TVShow(models.Model):
 

@@ -3,7 +3,7 @@
 from django.shortcuts import render, render_to_response
 from django.http import HttpResponse
 from .forms import TVShowForm, LikeForm
-from .models import TVShow, User_Likes
+from .models import TVShow, UserLikes
 from django.template import loader
 import json
 from .exception import AuthenticationException
@@ -76,8 +76,16 @@ def Actor_Page(request, act_id):
     return HttpResponse(template.render(request=request, context=context))
 
 # fonction qui permet de liker les séries et de former une base de données à partir de cette action
-def Save_like(request, tv_id):
-    likes= User_Likes()
+"""def Save_like(request, tv_id):
+    likes= UserLikes()
+    query_results = UserLikes.objects.filter(user=request.user).all()
+    print (query_results)
+    for x in query_results :
+        if
+    likes.user=request.user
+    likes.tv_id_liked = tv_id
+    #likes.save()
+    
     if request.user.is_authenticated():
         likes.user = request.user
         # On utilise un décodeur json pour décoder notre chaine de caractères likes.tv_id_liked
@@ -85,6 +93,9 @@ def Save_like(request, tv_id):
         # On le transforme en liste avec json
         list_tv_id_liked = jsonDec.decode(likes.tv_id_liked)
         # On rajoute chaque id à cette liste
+
+        ########### attention, je crois que ça marche pas !###################################################
+        print(list_tv_id_liked)
         if not tv_id in list_tv_id_liked:
             list_tv_id_liked.append(tv_id)
             # On retransforme la liste modifée en chaine de caractères
@@ -97,44 +108,42 @@ def Save_like(request, tv_id):
     actors = api.get_serie_actors(tv_id)
     context = {'serie': serie, 'actors': actors,'tv_show': tv_show}
     template = loader.get_template('LikeSeries/TVShow_page.html')
+    return HttpResponse(template.render(request=request, context=context))"""
+
+
+def LikeSerie(request, tv_id):
+    apic = api_call.Api_call()
+    apic.LikeSerie(request.user, tv_id)
+    serie = apic.get_serie(tv_id)
+    tv_show = TVShow(serie)
+    actors = apic.get_serie_actors(tv_id)
+    context = {'serie': serie, 'actors': actors,'tv_show': tv_show}
+    template = loader.get_template('LikeSeries/TVShow_page.html')
     return HttpResponse(template.render(request=request, context=context))
+
+
 
 def Afficher_series_liked(request):
     api = api_call.Api_call()
-    jsonDec = json.decoder.JSONDecoder()
-    query_results = User_Likes.objects.filter(user=request.user).all()
+    query_results = UserLikes.objects.filter(user=request.user).all()
+    for x in query_results :
+        print (x.user)
+        print (x.tv_id_liked)
     serie_liked = []
     id_liked = []
     for x in query_results:
-        list_tv_id_liked = jsonDec.decode(x.tv_id_liked)
-        for y in list_tv_id_liked:
-            id_liked.append(y)
-    for x in set(id_liked):
+        list_tv_id_liked = x.tv_id_liked
+        print(list_tv_id_liked)
+        id_liked.append(list_tv_id_liked)
+    for x in id_liked:
         serie_liked.append(api.get_serie(x))
     if request.user.is_authenticated():
         context = {'serie_liked': serie_liked}
         template = loader.get_template('LikeSeries/Bibliotheque.html')
         return HttpResponse(template.render(request=request, context=context))
 
-def Remove_like(request, tv_id) :
-    likes= User_Likes()
-    if request.user.is_authenticated():
-        likes.user = request.user
-        # On utilise un décodeur json pour décoder notre chaine de caractères likes.tv_id_liked
-        jsonDec = json.decoder.JSONDecoder()
-        # On le transforme en liste avec json
-        list_tv_id_liked = jsonDec.decode(likes.tv_id_liked)
-        # On rajoute chaque id à cette liste
-        if tv_id in list_tv_id_liked:
-            list_tv_id_liked.remove(tv_id)
-            # On retransforme la liste modifée en chaine de caractères
-            likes.tv_id_liked = json.dumps(list_tv_id_liked)
-            likes.save()
-    api = api_call.Api_call()
-    serie = api.get_serie(tv_id)
-    # création de l'objet TVShow pour pouvoir enregistrer les informations propres à cet objet spécifique (par exemple les likes)
-    tv_show = TVShow(serie)
-    actors = api.get_serie_actors(tv_id)
-    context = {'serie': serie, 'actors': actors, 'tv_show': tv_show}
-    template = loader.get_template('LikeSeries/Bibliotheque.html')
-    return HttpResponse(template.render(request=request, context=context))
+
+def RemoveLike(request, tv_id) :
+    apic = api_call.Api_call()
+    apic.RemoveLike(request.user, tv_id)
+    return Afficher_series_liked(request)

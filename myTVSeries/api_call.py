@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime
+from LikeSeries.models import UserLikes
 
 class Api_call:
     url = "https://api.themoviedb.org/3/"
@@ -76,7 +77,7 @@ class Api_call:
             resp = requests.get(Api_call.url + "tv/" + str(tv_id) + Api_call.api_key)
             serie = resp.json()
             last_season = 1
-            # On va chercher la dernière saison existante
+            # On va chercher la derniere saison existante
             for item in serie.seasons :
                 last_season = item.season_number
             resp = requests.get(Api_call.url + "tv/" + str(tv_id) + "/season/" + str(last_season) + Api_call.api_key)
@@ -121,3 +122,15 @@ class Api_call:
                 series.is_coming_soon = False
             result.append(series)
         return result
+
+
+
+    def LikeSerie(self, user, tv_id):
+        newEntry=UserLikes(user=user,tv_id_liked=tv_id)
+        newEntry.save()
+        return 'OK'
+
+
+    def RemoveLike(self, user, tv_id):
+        UserLikes.objects.filter(user_id=user.id,tv_id_liked=tv_id).delete()
+        return 'OK'
