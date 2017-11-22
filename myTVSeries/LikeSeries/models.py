@@ -21,7 +21,7 @@ class TVShow(models.Model):
     )
 
     tv_id = models.IntegerField()
-    title = models.CharField(max_length=200, blank=True)
+    title = models.CharField(max_length=200, blank=False)
     director = models.CharField(max_length=200, blank=True)
     language = models.CharField(max_length=20, blank=True)
     actors = models.CharField(max_length=200, blank=True)
