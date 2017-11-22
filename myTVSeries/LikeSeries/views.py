@@ -67,7 +67,7 @@ def Actor_Page(request, act_id):
     template = loader.get_template('LikeSeries/Actor.html')
     return HttpResponse(template.render(request=request, context=context))
 
-
+#Fonction pour liker une serie
 def LikeSerie(request, tv_id):
     apic = api_call.Api_call()
     apic.LikeSerie(request.user, tv_id)
@@ -78,6 +78,7 @@ def LikeSerie(request, tv_id):
     template = loader.get_template('LikeSeries/TVShow_page.html')
     return HttpResponse(template.render(request=request, context=context))
 
+#Fonction pour afficher les series
 def Afficher_series_liked(request):
     api = api_call.Api_call()
     query_results = UserLikes.objects.filter(user=request.user).all()
@@ -95,7 +96,8 @@ def Afficher_series_liked(request):
         context = {'serie_liked': serie_liked, 'next_episodes':next_episodes}
         template = loader.get_template('LikeSeries/Bibliotheque.html')
         return HttpResponse(template.render(request=request, context=context))
-
+    
+#Fonction pour supprimer une serie
 def RemoveLike(request, tv_id) :
     apic = api_call.Api_call()
     apic.RemoveLike(request.user, tv_id)
