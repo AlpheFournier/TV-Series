@@ -91,10 +91,8 @@ def LikeSerie(request, tv_id):
 def Afficher_series_liked(request):
     api = api_call.Api_call()
     query_results = UserLikes.objects.filter(user=request.user).all()
-    for x in query_results :
-        print (x.user)
-        print (x.tv_id_liked)
     serie_liked = []
+    next_episodes = []
     id_liked = []
     for x in query_results:
         list_tv_id_liked = x.tv_id_liked
@@ -102,8 +100,10 @@ def Afficher_series_liked(request):
             id_liked.append(list_tv_id_liked)
     for x in id_liked:
         serie_liked.append(api.get_serie(x))
+        next_episodes.append(api.next_episodes(x))
+    print(next_episodes)
     if request.user.is_authenticated():
-        context = {'serie_liked': serie_liked}
+        context = {'serie_liked': serie_liked, 'next_episodes':next_episodes}
         template = loader.get_template('LikeSeries/Bibliotheque.html')
         return HttpResponse(template.render(request=request, context=context))
 

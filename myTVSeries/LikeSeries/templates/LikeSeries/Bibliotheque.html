@@ -20,6 +20,15 @@
                         <b><a href = "{% url 'LikeSeries:TVShow_page' serie.id %}">{{serie.name}}</a></b>
                     <h1 class="w3-small">Nombre de saisons: {{serie.number_of_seasons}} </h1>
                     <h1 class="w3-small">Nombre d'épisodes: {{serie.number_of_episodes}} </h1>
+                    <h1 class="w3-small">
+                        {% for element in next_episodes %}
+                            {% for item in element %}
+                                {% if item == serie.id %}
+                                    Next Episode :  {{item.air_date}}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                    </h1>
                 </li></p>
                 <form method="post" action="{% url 'LikeSeries:Remove' serie.id %}">
                   {% csrf_token %}
