@@ -109,23 +109,28 @@ class Api_call:
         season = resp.json()
         today = datetime.now()
         if season['air_date'] == None:
-            return {tv_id: {}}
+            dict = {}
+            dict['tv_id']=tv_id
+            return dict
         date_first_episode = datetime.strptime(season['air_date'], "%Y-%m-%d")
         if (date_first_episode - today).days > 0:
-            return {tv_id: season['episodes'][0]}
+            dict = season['episodes'][0]
+            dict['tv_id']=tv_id
+            return dict
         elif (date_first_episode - today).days < 0:
             for episode in season['episodes']:
                 date_episode = datetime.strptime(episode['air_date'], "%Y-%m-%d")
                 if date_episode > today:
                     if (date_episode - today).days <= 7:
-                        return {tv_id: episode}
+                        dict = episode
+                        dict['tv_id']=tv_id
+                        return dict
         return {tv_id: {}}
 
     def LikeSerie(self, user, tv_id):
         newEntry=UserLikes(user=user,tv_id_liked=tv_id)
         newEntry.save()
         return 'OK'
-
 
     def RemoveLike(self, user, tv_id):
         UserLikes.objects.filter(user_id=user.id,tv_id_liked=tv_id).delete()
