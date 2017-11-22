@@ -70,8 +70,9 @@ class Api_call:
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
 
-    def coming_episodes(self, tv_id, list):
-        while len(list) != 0:
+    def next_episodes(self, tv_id, list):
+        list_id = list
+        while len(list_id) != 0:
             resp = requests.get(Api_call.url + "tv/" + str(tv_id) + Api_call.api_key)
             serie = resp.json()
             last_season = 1
@@ -92,5 +93,31 @@ class Api_call:
                         if (date_episode - today).days <= 7:
                             return {tv_id: episode}
             else:
-                list = list[1:]
+                list_id = list_id[1:]
         return {tv_id: {}}
+
+    def infos_next_episodes(self, series_list):
+        result = []
+        for series in series_list:
+            list_season = []
+            episode = {}
+            if series['status'] == 'Returning Series':
+                if len(series['seasons']) == 1:
+                    list_season = [0]
+                else:
+                    list_season = [0] * (len(series['seasons']) - 1)
+                episode = self.next_episodes(series['id'], list_season)
+                if episode[series['id']] == {}:
+                    if series['networks'] != [] and series['networks'][0].get['name'] == 'Netflix':
+                        series.is_netflix = True
+                    else:
+                        series.is_netflix = False
+                    series.is_coming_soon = False
+                else:
+                    series.is_coming_soon = True
+                    series.episode_coming_soon_name = episode[series.id]['name']
+                    series.episode_coming_soon_air_date = episode[series.id]['air_date']
+            else:
+                series.is_coming_soon = False
+            result.append(series)
+        return result

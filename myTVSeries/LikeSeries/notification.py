@@ -22,4 +22,4 @@ def link_user_episode(self):
     for serie in serie_liked:
         list = []
         episode = {}
-        if serie.status == 'Returning Series':
+
