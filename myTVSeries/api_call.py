@@ -116,7 +116,7 @@ class Api_call:
     def next_episodes(self, tv_id):
         """
         :param tv_id:
-        :return: Dictionnary with tv_id and the next episode
+        :return: Dictionnary with tv_id and the next episode, if the next episode will be broadcast in less than 7 days, according the API
         """
         resp = requests.get(Api_call.url + "tv/" + str(tv_id) + Api_call.api_key)
         serie = resp.json()
