@@ -9,10 +9,20 @@
 </div><br />
         <div style="margin: 20px;">
         {% for serie in serie_liked %}
-            <p><li class= "w3-large" style="line-height:15px;">
-                    <b><a href = "{% url 'LikeSeries:TVShow_page' serie.id %}">{{serie.name}}</a></b>
-                <h1 class="w3-small">Note de popularité: {{serie.popularity}} </h1>
-            </li></p>
+            <div class="w3-container w3-padding w3-card w3-light-grey">
+                <div class="w3-third w3-container">
+                        <a href = "{% url 'LikeSeries:TVShow_page' serie.id %}">
+                        <img id="resultsImg" src="https://image.tmdb.org/t/p/w500{{serie.backdrop_path}}" style="float:left;width:350px;height:150px;"
+                         alt="Image de la série" />
+                        </a>
+                </div>
+                <p><li class= "w3-large" style="line-height:15px;">
+                        <b><a href = "{% url 'LikeSeries:TVShow_page' serie.id %}">{{serie.name}}</a></b>
+                    <h1 class="w3-small">Nombre de saisons: {{serie.number_of_seasons}} </h1>
+                    <h1 class="w3-small">Nombre d'épisodes: {{serie.number_of_episodes}} </h1>
+                </li></p>
+            </div>
+            <br>
         {% endfor %}
         </div>
         {% endblock %}
