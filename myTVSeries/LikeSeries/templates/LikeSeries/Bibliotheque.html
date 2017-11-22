@@ -24,7 +24,7 @@
                 <form method="post" action="{% url 'LikeSeries:Remove' serie.id %}">
                   {% csrf_token %}
                   <input type="hidden" name="tv_id_liked" value="{{ serie.id }}">
-                  <button type="submit" class="w3-button w3-circle w3-blue" style="margin-top: -35px;margin-right: -20px; float: right">
+                  <button type="submit" class="w3-button w3-circle w3-red" style="margin-top: -35px;margin-right: 0px; float: right">
                       <i class="fa fa-thumbs-up" aria-hidden="true"></i>
                   </button>
                  <form>
