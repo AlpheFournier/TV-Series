@@ -25,9 +25,6 @@ Nous avons utilisé Docker durant le développement de ce projet, mais voici nos
 
 
 
-Au cas où, notre projet se trouve ici : https://github.com/Irisa7/TV-Series
-
-
 
 
 
