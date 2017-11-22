@@ -138,13 +138,20 @@ class Api_call:
             return dict
         elif (date_first_episode - today).days < 0:
             for episode in season['episodes']:
-                date_episode = datetime.strptime(episode['air_date'], "%Y-%m-%d")
+                try :
+                    date_episode = datetime.strptime(episode['air_date'], "%Y-%m-%d")
+                except :
+                    dict = {}
+                    dict['tv_id'] = tv_id
+                    return dict
                 if date_episode > today:
                     if (date_episode - today).days <= 7:
                         dict = episode
                         dict['tv_id'] = tv_id
                         return dict
-        return {tv_id: {}}
+        dict = {}
+        dict['tv_id'] = tv_id
+        return dict
 
 
 
