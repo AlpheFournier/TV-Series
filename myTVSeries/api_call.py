@@ -1,4 +1,5 @@
 import requests
+from datetime import datetime
 
 class Api_call:
     url = "https://api.themoviedb.org/3/"
@@ -69,3 +70,27 @@ class Api_call:
         print("The {} highest rated series are: ".format(len(answer)))
         return answer
 
+    def coming_episodes(self, tv_id, list):
+        while len(list) != 0:
+            resp = requests.get(Api_call.url + "tv/" + str(tv_id) + Api_call.api_key)
+            serie = resp.json()
+            last_season = 1
+            # On va chercher la dernière saison existante
+            for item in serie.seasons :
+                last_season = item.season_number
+            resp = requests.get(Api_call.url + "tv/" + str(tv_id) + "/season/" + str(last_season) + Api_call.api_key)
+            season = resp.json()
+            today = datetime.now()
+            if season['air date'] == None:
+                return {tv_id: {}}
+            date_first_episode = datetime.strptime(season['air_date'], "%Y-%m-%d")
+            result = []
+            if (today - date_first_episode).days > 0 and (today - date_first_episode).days < 365:
+                for episode in season['episodes']:
+                    date_episode = datetime.strptime(episode['air_date'], "%Y-%m-%d")
+                    if date_episode > today:
+                        if (date_episode - today).days <= 7:
+                            return {tv_id: episode}
+            else:
+                list = list[1:]
+        return {tv_id: {}}

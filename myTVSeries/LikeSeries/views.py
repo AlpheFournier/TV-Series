@@ -6,10 +6,10 @@ from .forms import TVShowForm, LikeForm
 from .models import TVShow, User_Likes
 from django.template import loader
 import json
+from .exception import AuthenticationException
 
 import sys
 sys.path.append("..")
-
 import api_call
 
 def home(request):
@@ -99,17 +99,10 @@ def Save_like(request, tv_id):
     template = loader.get_template('LikeSeries/TVShow_page.html')
     return HttpResponse(template.render(request=request, context=context))
 
-    """if request.method == 'POST':
-        like = LikeForm(request.POST)"""
-
-
-
 def Afficher_series_liked(request):
-    likes= User_Likes()
     api = api_call.Api_call()
     jsonDec = json.decoder.JSONDecoder()
-    print(type(likes.tv_id_liked), likes.tv_id_liked)
-    query_results = User_Likes.objects.all()
+    query_results = User_Likes.objects.filter(user=request.user).all()
     serie_liked = []
     id_liked = []
     for x in query_results:
